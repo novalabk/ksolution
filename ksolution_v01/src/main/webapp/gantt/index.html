@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=800">
+<meta property="og:title" content="HTML5 자바스크립트 간트차트 AUIGantt"/>
+<meta property="og:url"  content="http://www.auisoft.net/demo/auigantt/index.html">
+<meta property="og:image" content="http://www.auisoft.net/images/logo3d.png">
+<meta property="og:description"  content="HTML5 자바스크립트 간트차트(javascript ganttchart - AUIGantt"/>
+<meta name="Keywords" content="webGantt, web Gantt, dataGantt, javascript Gantt, html5 Gantt, Gantt component, javascript Gantt component, 웹 간트차트, 데이타 간트차트, 데이터간트차트, 자바스크립트 간트차트, HTML5 간트차트"/>
+ 
+<title>HTML5 자바스크립트 간트차트(JavaScript Gantt Chart) - AUIGantt</title>
+<style type="text/css">
+body {
+	font-size:13px;
+	font-family: 'Malgun Gothic','맑은 고딕',AppleSDGothicNeo-Light,Cambria, Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+}
+h1 > p {
+	margin-top:10px;
+}
+</style>
+</head>
+<body>
+<h1>AUIGantt 3.5 Samples</h1>
+	
+	<p>■ 엑셀로 저장(내보내기) 데모는 반드시 exportURL 속성을 서버 환경에 맞게 고치고 실행해주세요.<br/>
+	export_server_samples 폴더에 PHP, JSP, ASP 용 소스가 있습니다.(ROOT 폴더 아래에 있음)</p>
+	
+	<p>■ "unauthorized hosts for AUIGantt" 메세지 출력에 대한 대응</p>
+	<ul>
+		<li>평가판 사용자 : 등록된 호스트가 아닌 곳에서 AUIGantt 를 실행하고 있는 경우입니다. 또는 웹 서버에 올리지 않고 바로 윈도우 탐색기에서 index.html 을 실행한 경우입니다. <br/>반드시 웹 서버에 올린 후 http://... 또는 https:// 와 같은 URL 경로로 접근하십시오.(C://.. 과 같은 접근 허용은 별도의 라이센스 필요)</li>
+		<li  style="padding-top:10px;">정품 사용자 : 구매한 정품 라이센스의 호스트가 아닌 곳에서 AUIGantt 를 실행하고 있는 경우입니다.</li>
+	</ul>
+	
+				<div class="container content">
+			    <div class="margin-bottom-40"></div>
+			    	<div class="row">
+			    		<div class="col-sm-3 info-blocks">
+			                <i class="icon-info-blocks fa fa-lock"></i>
+			                <div class="info-blocks-in">
+			                    <h3><a href="./samples/default_doc_demo.html" target="_blank">데이터 바인딩 - 문서 데이터</a></h3>
+			                     <p>AUIGantt 에 의해 작성된 문서 포맷 형식을 볼 수 있습니다. 문서 데이터는 기본 데이터를 비롯 서식, 설정 등이 포함된 형태의 데이터입니다.</p>
+			                </div>
+			            </div>
+			            <div class="col-sm-3 info-blocks">
+			                <i class="icon-info-blocks fa fa-bell-o"></i>
+			                <div class="info-blocks-in">
+			                     <h3><a href="./samples/external_json_data.html" target="_blank">데이터 바인딩 - JSON 계층<span class="new"></span></a></h3>
+			                    <p>서버 사이드에서 DB 또는 다른 저장 매체에 있는 데이터를 JSON 계층형태로 작성하였을 때 AUIGantt 에서 어떻게 출력하는지를 볼 수 있습니다.</p>
+			                </div>
+			            </div>
+			            <div class="col-sm-3 info-blocks">
+			                <i class="icon-info-blocks fa fa-compress"></i>
+			                <div class="info-blocks-in">
+			                     <h3><a href="./samples/external_flat_json_data.html" target="_blank">데이터 바인딩 - JSON 일반<span class="new"></span></a></h3>
+			                    <p>서버 사이드에서 DB 또는 다른 저장 매체에 있는 데이터를 JSON 일반형태로 작성하였을 때 AUIGantt 에서 어떻게 출력하는지를 볼 수 있습니다.</p>
+			                </div>
+			            </div>
+			            <div class="col-sm-3 info-blocks">
+			                <i class="icon-info-blocks fa fa-star-o"></i>
+			                <div class="info-blocks-in">
+			                 	 <h3><a href="./samples/external_xml_data.html" target="_blank">데이터 바인딩 - XML 일반<span class="new"></span></a></h3>
+			                   <p>서버 사이드에서 DB 또는 다른 저장 매체에 있는 데이터를 XML 일반형태로 작성하였을 때 AUIGantt 에서 어떻게 출력하는지를 볼 수 있습니다.</p>
+			                </div>
+			            </div>
+			    </div>
+			    
+			    <div class="margin-bottom-60"></div>
+			    	<div class="row">
+			    		<div class="col-sm-3 info-blocks">
+			                <i class="icon-info-blocks fa fa-lock"></i>
+			                <div class="info-blocks-in">
+			                    <h3><a href="./samples/readonly_toggle_demo.html" target="_blank">편집 가능 | 보기 전용 모드</a></h3>
+			                    <p>필요 및 권한에 따라 편집 가능 및 보기 전용 모드로 설정 및 변경이 가능합니다.</p>
+			                </div>
+			            </div>
+			            <div class="col-sm-3 info-blocks">
+			                <i class="icon-info-blocks fa fa-compress"></i>
+			                <div class="info-blocks-in">
+			                    <h3><a href="./samples/custom_fields.html" target="_blank">시트 칼럼 필드 설정</a></h3>
+			                    <p>작업명, 시작날짜, 종료날짜 등 기본적인 칼럼을 제거하거나 작업 비용, 특징 등 임의의 원하는 칼럼을 추가 할 수 있습니다.</p>
+			                </div>
+			            </div>
+			            <div class="col-sm-3 info-blocks">
+			                <i class="icon-info-blocks fa fa-star-o"></i>
+			                <div class="info-blocks-in">
+			                 	<h3><a href="./samples/init_view_demo.html" target="_blank">간트 초기 화면 설정</a></h3>
+			                   <p>최초 간트 차트가 로딩되고 데이터를 삽입했을 때 사용자에게 보여줄 초기 화면을 설정할 수 있습니다.</p>
+			                </div>
+			            </div>
+			            <div class="col-sm-3 info-blocks">
+			                <i class="icon-info-blocks fa fa-star-o"></i>
+			                <div class="info-blocks-in">
+			                 	<h3><a href="./samples/baseline_demo.html" target="_blank">베이스라인(baseline) 표현<span class="new"></span></a></h3>
+			                   <p>계획된 날짜와 실제 실행은 다를 수 있습니다. 이 다른 정보를 베이스라인(baseline)으로 출력 할 수 있습니다.</p>
+			                </div>
+			            </div>
+			    </div>
+			    <div class="row margin-bottom-60">
+			    	<div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-star-o"></i>
+		                <div class="info-blocks-in">
+		                    <h3><a href="./samples/time_scale_demo.html" target="_blank">시간 단위 및 확대,축소</a></h3>
+		                   <p>지원하는 시간 단위와 시간축 확대, 축소, 이동 등을 어떻게 설정하는지 볼 수 있습니다.</p>
+		                </div>
+		            </div>
+		            <div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-code"></i>
+		                <div class="info-blocks-in">
+		                	<h3><a href="./samples/export_excel_demo.html" target="_blank">엑셀로 저장하기</a></h3>
+		                    <p>작성된 프로젝트를 간트 차트 포함하여 엑셀로 저장 할 수 있습니다.</p>
+		                </div>
+		            </div>
+		            <div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-lock"></i>
+		                <div class="info-blocks-in">
+		                    <h3><a href="./samples/start_date_demo.html" target="_blank">프로젝트 시작 날짜 변경</a></h3>
+		                     <p>기존의 프로젝트 문서를 재사용하기 위하여 프로젝트 시작 날짜를 변경합니다. 모든 작업이 일괄적으로 해당 날짜에 맞게 변경됩니다.</p>
+		                </div>
+		            </div>
+					<div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-lock"></i>
+		                <div class="info-blocks-in">
+		                    <h3><a href="./samples/update_project_demo.html" target="_blank">작업 진행률 업데이트</a></h3>
+		                     <p>작업 진행율을 특정 날짜 대비로 몇 퍼센트 진행했는지 일괄적으로 변경 할 수 있습니다.</p>
+		                </div>
+		            </div>
+		        </div>
+		        
+			    <div class="row margin-bottom-60">
+			    	<div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-lock"></i>
+		                <div class="info-blocks-in">
+		                    <h3><a href="./samples/holiday_demo.html" target="_blank">작업일, 공휴일 설정</a></h3>
+		                     <p>토요일 또는 일요일에 작업 할지 여부 또는 임의의 공휴일을 설정 할 수 있습니다.</p>
+		                </div>
+		            </div>
+		            <div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-code"></i>
+		                <div class="info-blocks-in">
+		                	<h3><a href="./samples/custom_tooltip_demo.html" target="_blank">차트 툴팁 사용자 정의</a></h3>
+		                     <p>간트차트 바에 바우스 오버 시 나타나는 툴팁의 내용을 사용자 정의 할 수 있습니다.</p>
+		                </div>
+		            </div>
+		            <div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-lock"></i>
+		                <div class="info-blocks-in">
+		                    <h3><a href="./samples/header_menu_demo.html" target="_blank">정렬, 필터 헤더 메뉴 지정</a></h3>
+		                     <p>정렬 및 필터로 작업 내역을 쉽게 분석할 수 있습니다.</p>
+		                </div>
+		            </div>
+		            <div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-lock"></i>
+		                <div class="info-blocks-in">
+		                    <h3><a href="./samples/style_demo.html" target="_blank">간트 스타일 설정</a></h3>
+		                     <p>간트 차트의 색상 및 텍스트 필드를 설정 할 수 있습니다.</p>
+		                </div>
+		            </div>
+		        </div>
+		        
+		        
+		         <div class="row margin-bottom-60">
+			    	<div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-star-o"></i>
+		                <div class="info-blocks-in">
+		                    <h3><a href="./samples/pinup_demo.html" target="_blank">중요 날짜 차트에 표시(핀업)</a></h3>
+		                   <p>간트 차트에 중요 날짜(예: 중간 보고 등), 또는 날짜 영역을 표시 할 수 있습니다.</p>
+		                </div>
+		            </div>
+		            <div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-code"></i>
+		                <div class="info-blocks-in">
+		                	<h3><a href="./samples/shortcut_demo.html" target="_blank">단축키 설정하기</a></h3>
+		                    <p>간트 시트(그리드)에 단축키를 설정하여 원하는 명령어를 실행 할 수 있습니다.</p>
+		                </div>
+		            </div>
+		            <div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-lock"></i>
+		                <div class="info-blocks-in">
+		                    <h3><a href="./samples/task_memo_demo.html" target="_blank">작업 메모(이슈) 설정하기</a></h3>
+		                     <p>개별 작업에 메모를 설정할 수 있습니다. 이슈 사항이나 팀원에게 알리고 싶은 메세지를 표시합니다.</p>
+		                </div>
+		            </div> 
+		            <div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-lock"></i>
+		                <div class="info-blocks-in">
+		                    <h3><a href="./samples/messages_jp_demo.html" target="_blank">다국어(리소스번들)</a></h3>
+		                    <p>특정 지역에 맞게 메세지 및 날짜 형식을 변경 할 수 있습니다. 예를 들어 2015-09-09(수) 또는 Wed Sep, 9 2015 처럼 지정할 수 있습니다.</p>
+		                </div>
+		            </div> 
+		        </div>
+		        
+		        
+		        <div class="row margin-bottom-60">
+			    	<div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-lock"></i>
+		                <div class="info-blocks-in">
+		                    <h3><a href="./samples/resize_demo.html" target="_blank">리사이징 하기</a></h3>
+		                     <p>간트차트를 특정 이벤트에 따라 또는 브라우저 크기에 따라 리사이징하도록 할 수 있습니다.</p>
+		                </div>
+		            </div>
+		            <div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-code"></i>
+		                <div class="info-blocks-in">
+		                	<h3><a href="./samples/info_message_demo.html" target="_blank">메세지 띄우기</a></h3>
+		                     <p>간트 차트 위에 메세지를 출력 시킵니다.</p>
+		                </div>
+		            </div>
+		            <div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-lock"></i>
+		                <div class="info-blocks-in">
+		                    <h3><a href="./samples/event_selection_demo.html" target="_blank">이벤트 핸들링</a></h3>
+		                     <p>셀 선택, 셀 클릭 등의 이벤트 핸들링을 어떻게 하는지 보여줍니다.</p>
+		                </div>
+		            </div>
+		            
+		            <div class="col-sm-3 info-blocks">
+		                <i class="icon-info-blocks fa fa-lock"></i>
+		                <div class="info-blocks-in">
+		                    <h3><a href="./samples/bt_tasks_demo.html" target="_blank">부트스트랩 작업 메뉴 작성</a></h3>
+		                     <p>작업과 관련된 메뉴를 부트스트랩(Bootstrap)으로 작성한 예제입니다.</p>
+		                </div>
+		            </div>
+		            
+		        </div>
+		        
+			</div>
+			
+			<div>
+					<h3 class="sf_title">활용 예제</h3>
+					<ul>
+						
+						<li><h5>간트 차트 일반<span class="new"></span></h5>
+							<ol>
+								<li><a href="./samples/grid_column_change_demo.html" target="_blank">간트 그리드의 칼럼 레이아웃 변경하기</a></li>
+								<li><a href="./samples/animation_demo.html" target="_blank">스케일링 시 애니메이션 효과 없애기</a></li>
+								<li><a href="./samples/timescale_dates_demo.html" target="_blank">특정 날짜 범위 기준으로 축 스케일링 하기</a></li>
+								<li><a href="./samples/row_height_demo.html" target="_blank">작업 행 높이, 헤더 높이 조절하기</a></li>
+								<li><a href="./samples/splitter_demo.html" target="_blank">스플리터(splitter) 사이즈 조절하기</a></li>
+								<li><a href="./samples/update_row_demo.html" target="_blank">외부에서 특정 셀, 행 값 변경하기</a></li>
+								<li><a href="./samples/toggle_branch_demo.html" target="_blank">요약작업(branch tasks) 전체 또는 부분적으로 열기/닫기</a></li>
+								<li><a href="./samples/get_own_row.html" target="_blank">특정 행(원하는 행) 얻기</a></li>
+							</ol>
+						</li>
+						
+						<li><h5>특정 행, 열, 셀 수정/편집 제어하기<span class="new"></span></h5>
+							<ol>
+								<li><a href="./samples/edit_lock_rows_demo.html" target="_blank">특정 행(rows)만 편집 불가 설정하기(특정 행 수정 하지 못하도록 잠금 설정하기)</a></li>
+								<li><a href="./samples/edit_lock_columns_demo.html" target="_blank">특정 열(columns)만 편집 불가 설정하기(특정 열 수정 하지 못하도록 잠금 설정하기)</a></li>
+								<li><a href="./samples/edit_cell_condition_demo.html" target="_blank">특정 조건으로  수정 허용/불허 결정하기</a></li>
+								<li><a href="./samples/edit_drag_condition_demo.html" target="_blank">특정 조건으로 간트 바(bar) 드래깅 수정 허용/불허 결정하기</a></li>
+							</ol>
+						</li>
+						
+						
+					</ul>
+			</div>
+			
+</body>
+</html>

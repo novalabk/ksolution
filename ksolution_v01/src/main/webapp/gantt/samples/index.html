@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="Content-Script-Type" content="text/javascript"/>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=1024"/>
+
+<meta property="og:title" content="HTML5 자바스크립트 간트차트 AUIGantt"/>
+<meta property="og:url"  content="http://www.auisoft.net/demo/auigantt/index.html">
+<meta property="og:image" content="http://www.auisoft.net/images/logo3d.png">
+<meta property="og:description"  content="HTML5 자바스크립트 간트차트(javascript ganttchart - AUIGantt"/>
+<meta name="Keywords" content="webGantt, web Gantt, dataGantt, javascript Gantt, html5 Gantt, Gantt component, javascript Gantt component, 웹 간트차트, 데이타 간트차트, 데이터간트차트, 자바스크립트 간트차트, HTML5 간트차트"/>
+ 
+<title>HTML5 자바스크립트 간트차트(JavaScript Gantt Chart) - AUIGantt</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+
+
+<link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+
+<style>
+.info-blocks-in h3 {
+	font-size:18px;
+	font-weight:bold;
+	color:#337ab7;
+}
+.wrap {
+	max-width:1280px;
+	margin:0 auto;
+}
+
+#header {
+	position:relative;
+	background-color: #2a2d33;
+	height:90px;
+}
+
+#logo-bar {
+	float: left;
+	margin-top: 1em;
+	margin-left: 2em;
+}
+
+.sf_title, .ver_title {
+	margin:1.5em 0 1em 0;
+}
+
+.browser_table {
+	min-width: 320px;
+	background-color: transparent;
+	width: 90%;
+	text-align:center;
+	margin:0 auto;
+	border-spacing: 2px;
+	border: 1px solid gray;
+	line-height:24px;
+	border-spacing: 0;
+	border-collapse: collapse;
+}
+.browser_table th {
+  border-bottom-width: 3px !important;
+  border: 1px solid #ddd;
+  background:#eeeeee;
+  text-align:center;
+}
+table tr td {
+	border: 1px solid #ddd;
+	padding: 4px 4px;
+	text-align:center;
+}
+
+.feature_ul {
+	list-style-type:disc;
+	list-style-position: inside;
+	line-height:1.5em;
+}
+
+.feature_ul a{
+	color:inherit;
+	text-decoration:none;
+}
+.feature_ul a:hover{
+	color:inherit;
+	text-decoration:underline;
+}
+.support_ie {border-bottom-color: #0275BA !important;}
+.support_ff {border-bottom-color: #DF7215 !important;}
+.support_sf {border-bottom-color: #43B3E9 !important;}
+.support_cr {border-bottom-color: #39B642 !important;}
+.support_op {border-bottom-color: #C42122 !important;}
+.support_nd {border-bottom-color: #8CC84B !important;}
+.support_ad {border-bottom-color: #990085 !important;}
+.support_ios {border-bottom-color: #6799FF !important;}
+
+.nav-buttons {
+	position:absolute;
+	right:20px;
+	top:20px;
+}
+
+.nav-btn {
+	background-color: #ee5315;
+	color: #fff;
+	border: 1px solid #ee5315;
+	background-clip: padding-box;
+	display: inline-block;
+	padding: 0.65em 1.5em;
+	line-height: 0.933em;
+	transition-property: background-color, color;
+	transition-duration: 0.2s;
+	transition-timing-function: ease;
+	border-radius: 0px;
+	-webkit-appearance: none;
+	font-size: 1em;
+	font-weight: bold;
+	text-align: center;
+	margin: 0.5em 0.5em;
+	cursor:pointer;
+}
+
+.nav-btn:hover {
+	background-color: #c2410e;
+	border-color: #c2410e;
+}
+
+#footer {
+	width:100%;
+	margin-top:50px;
+	background-color: #2a2d33;
+	text-align: right;
+	height:30px;
+	color:#ffffff;
+}
+.copyright {
+	font-size:0.8em;
+	margin-right:20px;
+	padding-top:5px;
+}
+
+#download:hover, #pricing:hover {
+	text-decoration:none;
+	color:#fff;
+}
+
+.new {
+    display: inline-block;
+    vertical-align: top;
+    height: 9px;
+    width: 18px;
+    margin-left: 2px;
+    background: url(./assets/new_ico.png) 50% 50% no-repeat;
+}
+
+</style>
+
+<?include("./frag/trace.html")?>
+
+<script type="text/javascript">
+window.onload = function() {
+	var supportCanvas = (document.createElement("canvas") && document.createElement("canvas").getContext) ? true : false;
+	if(!supportCanvas) {
+		alert("AUIGantt 는 HTML5를 지원하는 브라우저에서 이용이 가능합니다. 현재 버전에서 이용할 수 없습니다. 브라우저 업그레이드가 필요합니다.");
+		return;
+	}
+};
+</script>
+
+</head>
+<body>
+<div class="wrap">
+	<!-- header -->
+	<div id="header">
+		<div id="logo-bar">
+			<a href="/"> <img title="AUISoft" alt="AUISoft" src="./assets/auisoft.png"></a>
+		</div>
+		
+		<div class="nav-buttons">
+			<a id="download"  href="/dcenter.html"  class="nav-btn">DOWNLOAD FREE TRIAL</a>
+			<a id="pricing"  href="/price-gantt.html"  class="nav-btn">PRICING &amp; LICENSE</a>
+		</div>
+	
+		<!-- 모바일 버튼 -->
+		<div id="mobileBtn" onclick="mobileBtnClick()" class="btn_demo"" >
+			<span class="fnbar"></span>
+			<span class="fnbar"></span>
+			<span class="fnbar"></span>
+		</div>
+	
+	</div>
+	<!-- // end of header -->
+	<div id="main">
+		<div class="desc">
+			<h3 class="sf_title">AUIGantt Features</h3>
+			<ul class="feature_ul">
+				<li>AUIGantt 는 Active-X 사용 없이 자바스크립트와 HTML, CSS 로 작성된 웹 간트차트 컴포넌트 입니다.</li>
+				<li>AUIGantt 는 jQuery 또는 기타 JS Framework 에 의존적이지 않습니다. jQuery(또는 다른 JS) 와 함께 또는 단독으로 사용 가능합니다.</li>
+				<li>AUIGantt 는 특정 서버 사이드(PHP, JSP, ASP, .NET)에 종속되지 않습니다. 어떤 서버 사이드, WAS 든 적용 가능합니다.</li>
+				<li>AUIGantt 는 드래그 &amp; 드랍으로 쉽게 작업 이동 및 선행관계를 지정할 수 있습니다.</li>
+			</ul>
+			<h3 class="sf_title">지원 브라우저</h3>
+			<table class="browser_table">
+			  <tbody>
+			  		<tr>
+				    <th class="support_ie">Internet Explorer</th>
+				    <th class="support_ie">IE Edge</th>
+				    <th class="support_cr">Chrome</th>
+				    <th class="support_ff">Firefox</th>
+				    <th class="support_sf">Safari</th>
+					<th class="support_op">Opera</th>
+					<th class="support_ad">Android</th>
+					<th class="support_ios">iOS</th>
+				  </tr>
+				  <tr>
+				    <td>Yes 9+</td>
+				    <td>Yes</td>
+				    <td>Yes</td>
+				    <td>Yes</td>
+				    <td>Yes</td>
+				    <td>Yes</td>
+				    <td>Yes</td>
+				    <td>Yes</td>
+				  </tr>
+				</tbody>
+			</table>
+			<h3 class="sf_title">주요 기능 Ver. 3.5</h3>
+			
+			<?include("./frag/menu.html")?>
+			
+		</div>
+	</div>
+	
+	<div id="footer">
+	     <div class="copyright">
+	        <p>Copyright © 2018 AUISoft Co., Ltd. </p>
+	    </div>
+	</div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!doctype html>
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=1200">
+<meta name="apple-mobile-web-app-title" content="AUIGantt API Documentation">
+<meta property="og:title" content="AUIGantt API Documentation">
+<meta property="og:url" content="http://www.auisoft.net/documentation/auigantt">
+<meta property="og:description" content="AUIGantt API Documentation">
+<meta name="keywords" content="AUIGantt API Documentation">
+<title>	AUIGantt Documentation</title>
+<link rel="stylesheet" href="../style.css" type="text/css" media="screen">
+</head>
+<body>
+<div class="header">
+<div id="logo-bar">
+<a href="../index.html"><img src="../images/auisoft.png" alt="AUISoft" title="AUISoft"></a>
+</div>
+<span id="title">AUIGantt 3.5 Documentation</span>
+</div>
+<div class="MainContent">
+<p><div class="classDescContent">
+<!-- <a href="../package-summary.html" >
+	<span class="btn">메인으로 가기</span>
+</a>-->
+<span class="className">간트 그리드 필드 설정에 대하여</span>
+<p>간트 그리드 필드는 간트 차트 왼쪽에 출력되는 그리드의 열(column)에 어떤 필드를 출력 시킬지를 결정합니다.</p>
+<p>간트 차트 출력 시 기본이 되는 필드는 다음과 같습니다.</p>
+
+<pre>
+var myColumnLayout = [
+      AUIGantt.defaultColumnInfo.index, // 기본 정보 필드
+      AUIGantt.defaultColumnInfo.name, // 작업 이름 필드
+      AUIGantt.defaultColumnInfo.period, // 기간 필드
+      AUIGantt.defaultColumnInfo.start, // 작업 시작 날짜 필드
+      AUIGantt.defaultColumnInfo.end, // 작업 종료 날짜 필드
+      AUIGantt.defaultColumnInfo.startActual, // 실제 작업 시작 날짜 필드(baseline)
+      AUIGantt.defaultColumnInfo.endActual, // 실제 작업 종료 날짜 필드(baseline)
+      AUIGantt.defaultColumnInfo.predecessor, // 선행 관계 필드
+      AUIGantt.defaultColumnInfo.resource, // 자원 필드
+      AUIGantt.defaultColumnInfo.progress // 진행률 필드
+];</pre>
+
+<p>위의 필드는 기본 필드로 미리 AUIGantt.resources.kr.js (또는 해당 언어 리소스)에 미리 정의되어 있습니다.</p>
+<p><strong>원하는 필드를 선택적으로 구성 및 순서를 결정 하십시오.</strong></p> 
+<p>위의 기본 필드 외의 추가 필드를 구성하고자 하는 경우 해당 문서를 보고 작성하십시오.</p>
+<p>예를 들어 "금액" 이라는 필드를 추가하여, "자원 필드" 뒤에 위치 시켜 보도록 작성하면 다음과 같습니다.</p>
+<pre>
+var myColumnLayout = [
+      AUIGantt.defaultColumnInfo.index, // 기본 정보 필드
+      AUIGantt.defaultColumnInfo.name, // 작업 이름 필드
+      AUIGantt.defaultColumnInfo.period, // 기간 필드
+      AUIGantt.defaultColumnInfo.start, // 작업 시작 날짜 필드
+      AUIGantt.defaultColumnInfo.end, // 작업 종료 날짜 필드
+      AUIGantt.defaultColumnInfo.predecessor, // 선행 관계 필드
+      AUIGantt.defaultColumnInfo.resource, // 자원 필드
+];
+myColumnLayout.push({
+      headerText : "금액",
+      dataField : "price", // 데이터 필드 임의로 지정(단, 중복 없이 지정)
+      dataType : "numeric",
+      formatString : "#,##0",
+      postfix : "원"
+});
+myColumnLayout.push(AUIGantt.defaultColumnInfo.progress); // 진행률 필드 추가.
+</pre>
+<p>위에서 중요한 것은 dataField 를 "price" 로 지정한 것입니다.</p>
+<p><strong>"price"는 임의로 지정 가능하지만, 다음 예약어는 반드시 피하고 임의로 지정하십시오.</strong></p>
+<ul>
+	<li>index : 작업 정보 필드</li>
+	<li>name : 작업 이름 필드</li>
+	<li>period : 기간 필드</li>
+	<li>start : 작업 시작 날짜 필드</li>
+	<li>end : 작업 종료 날짜 필드</li>
+	<li>startActual : 실제 작업 시작 날짜 필드(baseline)</li>
+	<li>endActual : 실제 작업 종료 날짜 필드(baseline)</li>
+	<li>predecessor : 선행 작업 필드</li>
+	<li>resource : 자원 이름 필드</li>
+	<li>progress : 진행도(완료율) 필드</li>
+</ul>
+<p>&nbsp;</p>
+<p>위 선언문(columnLayout) 에서 "금액" 필드를 Object 로 선언된 것이 바로 칼럼(Column)입니다.</p>
+<p>즉, 칼럼 하나를 추가하고자 할 때 대표하는 Object 설정 및 가능한 속성을 보기 위해서는 Column 을 참고하세요</p>
+<p>아래 리스트는 칼럼 레이아웃의 속성과 해당 속성 값 중 객체에 해당되는 칼럼, 렌더러의 리스트입니다.</p>
+<p>가장 기본이 되는 객체인 <a href="./Column.html">Column</a>을 참고하십시오.</p>
+
+<p><strong>참고 : 간트 그리드 필드는 기본적으로 AUIGrid 칼럼 레이아웃 설정과 동일합니다. 단, AUIGrid 와 비교하여 다음의 제한된 렌더러만 사용 가능합니다.</strong></p>
+</div></p>
+<a name="classSummary"></a>
+<table class="summaryTable" cellspacing="0" cellpadding="3">
+<tr>
+<th>&nbsp;</th><th width="30%">TYPE</th><th width="70%">Description</th>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="BarRenderer.html">BarRenderer</a></td><td class="summaryTableLastCol">
+<p>바 렌더러는 특정 칼럼의 셀에 바 게이지가 출력되는 칼럼 렌더러입니다.</p>
+<p>바 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 renderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="BTCalendarRenderer.html">BTCalendarRenderer</a></td><td class="summaryTableLastCol">
+<p>부트스트랩 달력 렌더러를 출력할 수 있게 정의된 편집 렌더러입니다.</p>
+<p>editRenderer 속성으로 편집 시 부트스트랩 달력을 출력하여 날짜를 선택할 수 있게 합니다.</p>
+<p>부트스트랩 달력 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="CalendarRenderer.html">CalendarRenderer</a></td><td class="summaryTableLastCol">
+<p>달력 렌더러는 칼럼의 editRenderer 속성으로 편집 시 달력을 출력하여 날짜를 선택할 수 있게 정의된 렌더러입니다.</p>
+<p>달력 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="Column.html">Column</a></td><td class="summaryTableLastCol">
+<p>칼럼 레이아웃을 선언할 때 가장 기본이 되는 Object 입니다.</p>
+<p>하나의 칼럼에 해당되며, 레이아웃 설정에선 Object 로 선언을 합니다.</p>
+</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="ComboBoxRenderer.html">ComboBoxRenderer</a></td><td class="summaryTableLastCol">
+<p>콤보박스 렌더러는 특정 칼럼의 셀에 여러 항목 중 하나를 선택할 수 있도록 출력하는 칼럼 렌더러입니다.</p>
+<p>콤보박스와 드랍다운리스트의 차이점은 드랍다운리스트는 출력된 리스트 중 하나를 선택하는 반면 콤보박스는 출력된 리스트 중 하나를 선택하거나 직접 사용자가 다른 값을 입력 할 수 있습니다.</p>
+<p>콤보박스 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="IconRenderer.html">IconRenderer</a></td><td class="summaryTableLastCol">
+<p>아이콘 렌더러는 특정 칼럼의 셀에 아이콘이 포함되도록 출력하는 칼럼 렌더러입니다.</p>
+<p>아이콘 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 renderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 renderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow1">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="InputEditRenderer.html">InputEditRenderer</a></td><td class="summaryTableLastCol">
+<p>입력 편집 렌더러(InputEditRenderer)는 editable = true 인 경우 기본(defalut) 편집 렌더러입니다.(input[type="text"])</p>
+<p>이 렌더러는 사용자가 수정한 값의 유효성 검사(validating) 을 할 수 있으며, 숫자만 입력 가능토록 설정이 가능합니다.</p>
+<p>입력 편집 렌더러는 칼럼 레이아웃을 정의할 때 개별 칼럼의 editRenderer 속성 값인 Object 형태로 선언되어야 합니다.</p>
+<p><strong>칼럼의 editRenderer 속성의 type 으로만 설정 가능합니다.</strong></p>
+</td>
+</tr>
+<tr class="prow0">
+<td class="summaryTablePaddingCol">&nbsp;</td><td class="summaryTableSecondCol"><a href="TemplateRenderer.html">TemplateRenderer</a></td><td class="summaryTableLastCol">
+<p>템플릿 렌더러는 HTML 그대로를 출력하는 칼럼 렌더러입니다.</td>
+</tr>
+</table>
+<p></p>
+<div>
+<p></p>
+<center class="copyright">Copyright(c) 2014-2018 AUISoft Co. Ltd. All Right Reserved</center>
+</div>
+</div>
+</body>
+</html>
+<!--Copyright(c) 2014-2018 AUISoft Co. Ltd. All Right Reserved-->

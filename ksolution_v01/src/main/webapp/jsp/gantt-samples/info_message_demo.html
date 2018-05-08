@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="Content-Script-Type" content="text/javascript"/>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=1024"/>
+
+<meta property="og:title" content="HTML5 자바스크립트 간트차트 AUIGantt"/>
+<meta property="og:url"  content="http://www.auisoft.net/demo/auigantt/index.html">
+<meta property="og:image" content="http://www.auisoft.net/images/logo3d.png">
+<meta property="og:description"  content="HTML5 자바스크립트 간트차트(javascript ganttchart - AUIGantt"/>
+<meta name="Keywords" content="webGantt, web Gantt, dataGantt, javascript Gantt, html5 Gantt, Gantt component, javascript Gantt component, 웹 간트차트, 데이타 간트차트, 데이터간트차트, 자바스크립트 간트차트, HTML5 간트차트"/>
+ 
+<title>HTML5 자바스크립트 간트차트(JavaScript Gantt Chart) - AUIGantt</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+
+<!-- 간트 차트 CSS 스타일  -->
+<link href="../AUIGantt/AUIGantt_style.css" rel="stylesheet">
+
+<!-- 샘플 데모용 CSS. 실제 프로젝트에서 사용할 필요 없음. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- AUIGantt 라이센스. -->
+<script type="text/javascript" src="../AUIGantt/AUIGanttLicense.js"></script>
+
+<!-- AUIGantt 라이브러리 -->
+<script type="text/javascript" src="../AUIGantt/AUIGantt.js"></script>
+
+<!-- AUIGantt 리소스 파일 -->
+<script type="text/javascript" src="../AUIGantt/resources/AUIGantt.resources.kr.js"></script>
+
+
+
+<style>
+/* 인포 메세지로 띄울 DIV 의 스타일 */
+.my-info-msg {
+	margin:10% 0 0 40%;
+	color:red;
+	font-weight:bold;
+	font-size:26px
+}
+</style>
+<script type="text/javascript">
+
+// AUIGantt 생성 후 반환 ID
+var myGanttID;
+
+
+// 윈도우 onload
+// DOM 완료 후 간트 차트 생성함.
+window.onload = function() {  
+	
+	// 간트차트를 생성합니다.
+	createAUIGanttChart();
+	
+	// 최초 100행을 갖는 새문서 모드 만들기
+	AUIGantt.createNewDocument(myGanttID, 100);
+};
+
+// AUIGantt 를 생성합니다.
+function createAUIGanttChart() {
+	
+	// 간트 그리드(시트) 에 출력할 칼럼 필드 들 작성함.
+	// 아래는 기본값으로 위치 또는 임의 작성으로 개발자는 작성 가능합니다.
+	var myColumnLayout = [
+         AUIGantt.defaultColumnInfo.index, // 기본 정보 필드
+         AUIGantt.defaultColumnInfo.name, // 작업 이름 필드
+         AUIGantt.defaultColumnInfo.period, // 기간 필드
+         AUIGantt.defaultColumnInfo.start, // 작업 시작 날짜 필드
+         AUIGantt.defaultColumnInfo.end, // 작업 종료 날짜 필드
+         AUIGantt.defaultColumnInfo.predecessor, // 선행 관계 필드
+         AUIGantt.defaultColumnInfo.resource, // 자원 필드
+         AUIGantt.defaultColumnInfo.progress // 진행률 필드
+	];
+	                      
+	// 간트차트 속성 설정
+	var ganttProps = {
+			
+			// 편집 가능 여부
+			editable : true, 
+			
+			gridWidth : "45%",
+			
+			// 인덱스 1에 트리 칼럼을 만듬. 즉, 설정한 columnLayout 기준임.
+			treeColumnIndex: 1, 
+			
+			// 간트 그리드(시트) 레이아웃 (필수 정의해야 함)
+			columnLayout : myColumnLayout
+			
+	};
+	
+
+	// 실제로 #gantt_wrap 에 간트차트 생성
+	myGanttID = AUIGantt.create("#gantt_wrap", ganttProps);
+	
+	// ready 이벤트 바인딩
+	AUIGantt.bind(myGanttID, "ready", function(event) {
+		// 처음에 rowIndex 0, columnIndex 1 에 엑셀처럼 선택자 만들기.
+		AUIGantt.setSelectionByIndex(myGanttID, 0, 1);
+	});
+	
+	// 헤더 메뉴 아이콘 클릭 이벤트 바인딩
+	AUIGantt.bind(myGanttID, "headerIconClick", function(event) {
+		alert(event.headerText + " 헤더 메뉴 아이콘 클릭!!");
+	});
+};
+
+// 인포 메세지 출력
+function setInfoMessage() {
+	// 인포 메세지 출력
+	AUIGantt.setInfoMessage(myGanttID, '<div class="my-info-msg">간트 차트에 데이터를 삽입해 주십시오.</div>');
+};
+
+// 인포 메세지 제거
+function removeInfoMsg() {
+	AUIGantt.removeInfoMessage(myGanttID);
+};
+</script>
+
+</head>
+<body>
+	<div id="main">
+	
+		<div id="desc_top">
+			<p>원하는 메세지를 간트 차트 위에 띄울 수 있습니다.</p>
+			<p>특정 이벤트 발생 시 다음과 같이 setInfoMessage 로 가능합니다.</p>
+<xmp>// 간트 차트에 메시지 출력 
+AUIGantt.setInfoMessage(myGanttID, '<div class="my-info-msg">간트 차트에 데이터를 삽입해 주십시오.</div>');
+</xmp>
+			<div>
+				<button class="btn_demo"" onclick="setInfoMessage()">인포 메세지 표시 하기</button>
+				<button class="btn_demo"" onclick="removeInfoMsg()">인포 메세지 제거 하기</button>
+			</div>
+		</div>
+		
+		<!-- 에이유아이간트가 이곳에 생성됩니다. -->
+		<div id="gantt_wrap" style="width:100%; height:400px;"></div>
+		
+		<div id="desc_bottom">
+		</div>
+	</div>
+	
+	<div id="footer">
+	     <div class="copyright">
+	        <p>Copyright © 2017 AUISoft <a href="http://www.auisoft.net" target="_blank" class="link" style="color:#B2CCFF;">http://www.auisoft.net</a> </p>
+	    </div>
+	</div>
+	
+</body>
+</html>

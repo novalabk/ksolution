@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="Content-Script-Type" content="text/javascript"/>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=1024"/>
+
+<meta property="og:title" content="HTML5 자바스크립트 간트차트 AUIGantt"/>
+<meta property="og:url"  content="http://www.auisoft.net/demo/auigantt/index.html">
+<meta property="og:image" content="http://www.auisoft.net/images/logo3d.png">
+<meta property="og:description"  content="HTML5 자바스크립트 간트차트(javascript ganttchart - AUIGantt"/>
+<meta name="Keywords" content="webGantt, web Gantt, dataGantt, javascript Gantt, html5 Gantt, Gantt component, javascript Gantt component, 웹 간트차트, 데이타 간트차트, 데이터간트차트, 자바스크립트 간트차트, HTML5 간트차트"/>
+ 
+<title>HTML5 자바스크립트 간트차트(JavaScript Gantt Chart) - AUIGantt</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+
+<!-- 간트 차트 CSS 스타일  -->
+<link href="../AUIGantt/AUIGantt_style.css" rel="stylesheet">
+
+<!-- 샘플 데모용 CSS. 실제 프로젝트에서 사용할 필요 없음. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- AUIGantt 라이센스. -->
+<script type="text/javascript" src="../AUIGantt/AUIGanttLicense.js"></script>
+
+<!-- AUIGantt 라이브러리 -->
+<script type="text/javascript" src="../AUIGantt/AUIGantt.js"></script>
+
+<!-- AUIGantt 리소스 파일 -->
+<script type="text/javascript" src="../AUIGantt/resources/AUIGantt.resources.kr.js"></script>
+
+
+
+<script type="text/javascript">
+
+// AUIGantt 생성 후 반환 ID
+var myGanttID;
+
+
+// 윈도우 onload
+// DOM 완료 후 간트 차트 생성함.
+window.onload = function() {  
+	
+	// 간트차트를 생성합니다.
+	createAUIGanttChart();
+	
+	// 최초 100행을 갖는 새문서 모드 만들기
+	AUIGantt.createNewDocument(myGanttID, 100);
+};
+
+//윈도우 리사이징 이벤트
+window.onresize = function() {
+
+	// 크기가 변경되었을 때 AUIGantt.resize() 메소드 호출 
+	if (typeof myGanttID !== "undefined") {
+		// width, height 파라메터 설정하지 않으면 부모(#gantt_wrap) 100% 적용시킴
+		AUIGantt.resize(myGanttID);
+		
+		// 스플리터 50%로 조절
+		AUIGantt.setSplitterSize(myGanttID, "50%");
+	}
+};
+
+
+// AUIGantt 를 생성합니다.
+function createAUIGanttChart() {
+	
+	// 간트 그리드(시트) 에 출력할 칼럼 필드 들 작성함.
+	// 아래는 기본값으로 위치 또는 임의 작성으로 개발자는 작성 가능합니다.
+	var myColumnLayout = [
+         AUIGantt.defaultColumnInfo.index, // 기본 정보 필드
+         AUIGantt.defaultColumnInfo.name, // 작업 이름 필드
+         AUIGantt.defaultColumnInfo.period, // 기간 필드
+         AUIGantt.defaultColumnInfo.start, // 작업 시작 날짜 필드
+         AUIGantt.defaultColumnInfo.end, // 작업 종료 날짜 필드
+         AUIGantt.defaultColumnInfo.predecessor, // 선행 관계 필드
+         AUIGantt.defaultColumnInfo.resource, // 자원 필드
+         AUIGantt.defaultColumnInfo.progress // 진행률 필드
+	];
+	                      
+	// 간트차트 속성 설정
+	var ganttProps = {
+			
+			// 편집 가능 여부
+			editable : true, 
+			
+			gridWidth : "45%",
+			
+			// 인덱스 1에 트리 칼럼을 만듬. 즉, 설정한 columnLayout 기준임.
+			treeColumnIndex: 1, 
+			
+			// 간트 그리드(시트) 레이아웃 (필수 정의해야 함)
+			columnLayout : myColumnLayout
+			
+	};
+	
+
+	// 실제로 #gantt_wrap 에 간트차트 생성
+	myGanttID = AUIGantt.create("#gantt_wrap", ganttProps);
+	
+	// ready 이벤트 바인딩
+	AUIGantt.bind(myGanttID, "ready", function(event) {
+		// 처음에 rowIndex 0, columnIndex 1 에 엑셀처럼 선택자 만들기.
+		AUIGantt.setSelectionByIndex(myGanttID, 0, 1);
+		
+		AUIGantt.setSplitterSize(myGanttID, "50%");
+	});
+	
+	// 헤더 메뉴 아이콘 클릭 이벤트 바인딩
+	AUIGantt.bind(myGanttID, "headerIconClick", function(event) {
+		alert(event.headerText + " 헤더 메뉴 아이콘 클릭!!");
+	});
+};
+
+// 스플리터 사이즈 400 으로 조절
+function setSplitterSize() {
+	AUIGantt.setSplitterSize(myGanttID, 400);
+};
+
+// 스플리터 사이즈 50% 로 조절
+function setSplitterPercentageSize() {
+	AUIGantt.setSplitterSize(myGanttID, "50%");
+};
+
+</script>
+
+</head>
+<body>
+	<div id="main">
+	
+		<div id="desc_top">
+			<p>기본적으로 스플리터(splitter)의 크기는 데이터 기반 또는 최초 설정값에 좌우됩니다.</p>
+			<p>데이터 기반의 의미는 개별 데이터 저장 시점에 해당 값이 그대로 간트 데이터 서식에 보관됩니다. 따라서 해당 데이터를 삽입했을 때  그대로 복원이 원칙입니다.</p>
+			<p>그러나 사용자가 이를 외부에서 컨트롤 할 수 있도록 setSplitterSize 메소드를 제공합니다.</p>
+			<p>스플리터의 크기는 왼쪽에 위치한 그리드(간트 시트) 기준입니다. 예로 400을 설정하면 왼쪽이 400px 를 차지하게 됩니다.</p>
+<pre>
+
+// 고정 400px 로 크기 조절
+AUIGantt.setSplitterSize(myGanttID, 400);
+
+// 비율 50%로 크기 조절
+AUIGantt.setSplitterSize(myGanttID, "50%");
+</pre>
+			<div>
+				<button class="btn_demo" onclick="setSplitterSize()">400px 로 맞추기 - 고정값</button>
+				<button class="btn_demo" onclick="setSplitterPercentageSize()">50% 로 맞추기 - 비율값</button>
+			</div>
+		</div>
+		
+		<!-- 에이유아이간트가 이곳에 생성됩니다. -->
+		<div id="gantt_wrap" style="width:100%; height:400px;"></div>
+		
+		<div id="desc_bottom">
+		</div>
+	</div>
+	
+	<div id="footer">
+	     <div class="copyright">
+	        <p>Copyright © 2018 AUISoft Co., Ltd. <a href="http://www.auisoft.net" target="_blank" class="link" style="color:#B2CCFF;">http://www.auisoft.net</a> </p>
+	    </div>
+	</div>
+	
+</body>
+</html>

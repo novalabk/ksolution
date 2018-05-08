@@ -1,0 +1,478 @@
+@CHARSET "UTF-8";
+/* body {
+	font-family:'Malgun Gothic','맑은 고딕',AppleSDGothicNeo-Light,sans-serif;
+	overflow: hidden;
+} */
+
+a:focus {
+  outline: 0 none;
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  outline: 0 none;
+}
+.btn-success {
+  background-color: #ee5315;
+  border-color:#ee5315;
+}
+.btn-success:hover,
+.btn-success:focus {
+	background-color: #c2410e;
+	border-color: #c2410e;
+}
+.bg-success {
+  background-color: #ee5315; 
+}
+a.bg-success:hover,
+a.bg-success:focus {
+  background-color: #c2410e;
+}
+
+.btn-rectangle {
+	border-radius:0;	
+}
+
+.btn-bw {
+	background-color: #2a2d33;
+	color: #fff;
+}
+/*
+.ui-datepicker-trigger {
+	background: url(../assets/calendar-icon.png) no-repeat 50% 50%;
+	text-indent:-9999px;
+	display: inline-block;
+    padding: 6px 12px;
+    width:26px;
+    height:26px;
+    margin-bottom: 0;
+    font-weight: normal;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    outline: 0 none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.wrap {
+	max-width: 1820px;
+	margin: 0 auto;
+	position:relative;
+	overflow: hidden;
+}
+
+#header {
+	position:relative;
+	min-width: 980px;
+	background-color: #2a2d33;
+	height: 90px;
+	margin-bottom:10px;
+}
+
+#logo-bar {
+	padding:8px 0 0 40px;
+}
+ */
+.nav-buttons {
+	position:absolute;
+	right:0px;
+	top:0px;
+} 
+
+#main {
+	min-width: 980px;
+	margin: 0 auto;
+	padding: 0;
+	overflow: hidden;
+}
+
+#main_top {
+	position:relative;
+	min-width: 980px;
+	width: 100%;
+	margin: 0 auto;
+}
+
+/* 오른쪽 메뉴 */
+/* #right_menu {
+	border:1px solid #bdbdbd;
+	border-left:none;
+	box-sizing:border-box;
+	text-align:center;
+	padding-top:10px;
+} */
+
+/* #footer {
+	min-width: 980px;
+	width: 100%;
+	margin:0;
+	bottom: 0px;
+	background-color: #2a2d33;
+	text-align: right;
+	height: 30px;
+	color: #ffffff;
+}
+
+.copyright {
+	font-size: 12px;
+	margin-right: 20px;
+	padding-top: 5px;
+}
+
+문서 제목
+#document_title {
+	position: absolute;
+	font-weight:bold;
+	display:inline-block;
+	color:#fff;
+	min-width:600px;
+	font-size:1.5em;
+	top: 60px;
+	left: 260px;
+	text-shadow: 1px 1px 1px rgba(0,0,0,1);
+}
+
+팀 잠금 문서 표시
+#team_lock {
+	position: absolute;
+	display:none;
+	width:29px;
+	height:29px;
+	top: 60px;
+	left: 228px;
+}
+
+브랜치(요약 작업) 스타일
+.branch-style {
+	font-weight:bold;
+}
+
+.left-style {
+	text-align:left;
+}
+
+.right-style {
+	text-align:right;
+}
+
+.center-style {
+	text-align:center;
+}
+
+.bold {
+	font-weight:bold;
+}
+
+삭제 칼럼
+.my-delete-column {
+	cursor : pointer;
+}
+
+.ui-widget {
+	font-size:12px;
+	font-family:'Malgun Gothic','맑은 고딕',AppleSDGothicNeo-Light,sans-serif;
+	color:#000;
+} */
+
+.tab-menu-btn {
+	width:120px;
+	font-weight:bold;
+}
+
+.tab-pane {
+	padding:5px;
+	/* border-left:1px solid #bdbdbd;
+	border-right:1px solid #bdbdbd; */
+}
+
+/* 다이얼로그들 */
+
+/* #loginWindow p {margin-top:8px;};
+
+새로 저장하기 다이얼로그
+#saveWindow label, input { display:block; }
+#saveWindow input.text { margin-bottom:12px; width:95%; padding: .4em; }
+#saveWindow fieldset { padding:0; border:0; margin-top:25px; }
+#saveWindow .validateTips { border: 1px solid transparent;  }
+#publicWindow label, #publicWindow input { display:block; }
+#publicWindow input.text { margin-bottom:12px; width:95%; padding: .4em; }
+#publicWindow fieldset { padding:0; border:0; margin-top:25px; }
+#publicWindow .validateTips { border: 1px solid transparent;  }
+
+프로젝트 업데이트 다이얼로그
+#updateWindow input {display:inline; vertical-align:top; margin-right:2px;}
+#updateWindow input.text { margin-left:12px; width:120px; padding: 2px; }
+#updateWindow label { font-weight:normal;}
+#updateWindow p {margin-top:8px;}
+
+상세 다이얼로그
+#detailsWindow input {display:inline; vertical-align:top; margin-right:2px;}
+#detailsWindow label { font-weight:normal;}
+#detailsWindow p {margin-top:8px;}
+
+엑셀로 저장 다이얼로그
+#exportWindow input {display:inline; vertical-align:top; margin-right:2px;}
+#exportWindow input.text { margin-left:12px; width:120px; padding: 2px; }
+#exportWindow label { font-weight:normal;}
+#exportWindow p {margin-top:8px;}
+*/
+.delete-btn{
+	position: absolute;
+	top: 2px;
+	padding-left:2em;
+	padding-right:2em;
+	right: 0;
+}
+
+.save-btn{
+	position: absolute;
+	top: 2px;
+	padding-left:2em;
+	padding-right:2em;
+	right: 0;
+}
+
+.modify-btn {
+	position: absolute;
+	top: 2px;
+	padding-left:2em;
+	padding-right:2em;
+	right: 60px;
+}
+ 
+.saveAs-btn {
+	position: absolute;
+	top: 2px;
+	padding-left:2em;
+	padding-right:2em;
+	right: 122px;
+}
+/*
+.login-btn-tooltip {
+	position: absolute;
+	top: 8px;
+	right: 106px;
+	z-index:1;
+	opacity:1;
+}
+.login-btn-tooltip .tooltip-inner {
+	position:relative;
+	max-width:500px;
+	white-space:nowrap;
+	background:#fff;
+	border : 1px solid #555;
+	color:#000;
+}
+
+.tooltip.left.login-btn-tooltip .tooltip-arrow {
+	border-left-color:#555;
+}
+.act_lst {
+	margin: 20px 19px 30px;
+	border: 1px solid #bdbdbd;
+	border-radius: 5px; 
+	padding-left:0;
+	list-style:none;
+}
+
+.act_lst li {
+    overflow: hidden;
+    position: relative;
+    padding-left: 18px;
+    border-top: 1px solid #ddd;
+    font-size: 13px;
+    color: #333;
+    line-height: 41px;
+}
+
+.act_lst li:first-child {
+    border-top: 0;
+}
+
+.act_lst li a {
+    display: block;
+    color: #000;
+	outline:0 none;
+}
+
+.act_lst li .google {
+    background: url(../assets/google_logo.png) no-repeat 0 50%;
+    background-size: 32px 32px;
+}
+
+.act_lst li .naver {
+	 background: url(../assets/naver_logo.png) no-repeat 0 50%;
+	 background-size: 32px 32px;
+}
+
+.act_lst li a span {
+	display:inline-block;
+	padding-left:48px;
+} */
+
+
+/* 로그인 버턴들 끝 */
+
+/* 프로젝트 시작 날짜 input */
+/* #projectStartDate {
+	display:inline; 
+	vertical-align:top; 
+	margin-left:4px; 
+	margin-right:2px;
+	width:140px; 
+	padding: 4px 10px;
+	vertical-align:middle;
+	border: 1px solid #bdbdbd;
+    border-radius: 3px;
+    cursor:pointer;
+}
+
+시간 단위 select
+#timeSelect {
+	width:100px;
+	padding: 4px 10px;
+    vertical-align: middle;
+    border: 1px solid #bdbdbd;
+    border-radius: 3px;
+}
+
+다국어
+.select_dic_lang {
+    position: absolute;
+    top: 50px;
+    right: 10px;
+    list-style: none;
+}
+
+.select_dic_lang li {
+    float: left;
+}
+
+.select_dic_lang li a.ko.on {
+    background: url(../assets/kor_en.png) no-repeat -74px 0px;
+}
+
+.select_dic_lang li a.ko {
+    display: block;
+    width: 34px;
+    height: 23px;
+    text-indent: -9000px;
+    background: url(../assets/kor_en.png) no-repeat 0 0px;
+}
+
+.select_dic_lang li a.en {
+    display: block;
+    width: 33px;
+    height: 23px;
+    text-indent: -9000px;
+    background: url(../assets/kor_en.png) no-repeat -34px 0px;
+}
+
+.select_dic_lang li a.en.on {
+    background: url(../assets/kor_en.png) no-repeat -108px 0px;
+}
+
+
+
+
+***** 트리 아이콘 재정의 *****
+
+
+.aui-grid-tree-branch-icon {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	background: #fff;
+	margin: 0 2px 0 0;
+}
+
+.aui-grid-tree-branch-open-icon {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	background: #fff;
+	margin: 0 2px 0 0;
+}
+
+.aui-grid-tree-leaf-icon {
+	display: inline-block;
+	width: 16px;
+	height:16px;
+	background: url(../assets/flat_circle.png) no-repeat;
+	background-size:16px;
+	vertical-align: bottom;
+	margin: 0 2px 0 4px;
+}
+***** 트리 아이콘 재정의 끝*****
+
+마스터 그리드 셀력션 백그라운드 스타일 재정의
+#teamWindow #teamGridWrap .aui-grid-selection-bg {
+	background: #1D8B15 !important;
+}
+
+불러오기 그리드의 팀 문서 클래스
+.team_subject {
+	display: inline-block;
+	width: 16px;
+	height:24px;
+	margin-right:4px;
+	vertical-align:middle;
+	background:url(../assets/team-share.png) no-repeat 50% 50%;
+	background-size:16px;
+}
+
+.aui-grid-template-renderer-wrapper {
+	padding : 0 4px;
+}
+
+#issueWindow label, input { display:block; }
+#issueWindow input.text { margin-bottom:12px; width:100%; padding: .4em; }
+#issueWindow fieldset { padding:0; border:0; margin-top:25px; }
+
+.issue_cons_box {width:100%; height:200px; padding:.4em; margin:0 0 10px 0; }
+
+.issue_details_view {
+	width:100%;
+	height:180px;
+	margin:10px 0 0 0;
+	border : 2px solid #bdbdbd;
+	border-left:none;
+	border-right:none;
+	padding:10px 0;
+	overflow-y:auto;
+}
+
+이슈 상태 완료(closed)인 행 스타일
+.issue-closed-rows {
+	color:#aaa !important;
+	text-decoration:line-through !important;
+} */
+
+/* 헤더 메뉴 스타일 정의 */
+/* #headerMenu {
+	position:absolute;
+	display:none;
+	z-index:999;
+}
+
+jQuery UI Menu 스타일 재정의
+.ui-menu { 
+	width: 200px;
+	font-size:12px;
+	box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.3);
+}
+.ui-widget-header { 
+	padding: 0.2em; 
+} */

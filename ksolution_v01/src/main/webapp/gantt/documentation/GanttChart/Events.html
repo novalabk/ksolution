@@ -1,0 +1,664 @@
+<!doctype html>
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="../style.css" type="text/css" media="screen">
+<meta charset="utf-8">
+<meta http-equiv="Content-Script-Type" content="text/javascript">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=1200">
+<meta name="apple-mobile-web-app-title" content="AUIGantt API Documentation">
+<meta property="og:title" content="AUIGantt API Documentation">
+<meta property="og:url" content="http://www.auisoft.net/documentation/auigantt">
+<meta property="og:description" content="AUIGantt API Documentation">
+<meta name="keywords" content="AUIGantt API Documentation">
+<title>	AUIGantt Documentation</title>
+</head>
+<body>
+<div class="header">
+<div id="logo-bar">
+<a href="../index.html"><img src="../images/auisoft.png" alt="AUISoft" title="AUISoft"></a>
+</div>
+<span id="title">AUIGantt 3.5 Documentation</span>
+</div>
+<div class="classDescContent">
+<table cellspacing="0" cellpadding="0" class="classHeaderTable"></table>
+<span class="className">Events</span>
+<p></p>
+<p>AUIGantt 에서 송출되는 이벤트 리스트입니다.</p>
+<p></p>
+<br>
+</div>
+<div class="summarySection">
+<table id="summaryTableStyle" class="summaryTable " cellpadding="3" cellspacing="0">
+<tr>
+<th>NAME</th><th>Description</th>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">addRow</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>사용자가 Insert 키, Ctrl+Insert 키 또는 addRow(), addTreeRow() 를 통해 행을 추가(삽입)한 경우 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>items : 추가된 행 아이템들 (Array)</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "addRow", function( event ) {
+     alert(event.type + " 이벤트\r\n" + "\r\n삽입된 행 개수 : " + event.items.length);
+});
+</pre>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">addRowFinish</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>사용자가 Insert 키, Ctrl+Insert 키 또는 addRow(), addTreeRow() 를 통해 행을 추가(삽입)한 경우 발생하는 이벤트입니다.</p>
+<p>addRowFinish 이벤트와 addRow 이벤트의 차이는 다음과 같습니다.</p>
+<ul>
+<li>addRow : 행 추가 시 그리드가 추가한 행을 선택(selection) 하는데 이 때 selectionChange 이벤트가 발생합니다. addRow 이벤트는 selectionChange 이벤트 이 전에 발생합니다.</p>
+<li>addRowFinish : 행 추가 시 그리드가 추가한 행을 선택(selection) 하는데 이 때 selectionChange 이벤트가 발생합니다. addRowFinish 이벤트는 selectionChange 이벤트 이 후 발생합니다.</p>
+</ul>
+<p>즉, 새행에 선택자가 온 후 무엇인가를 하고 싶다면 addRowFinish 이벤트를 바인딩 하십시오.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>items : 추가된 행 아이템들 (Array)</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "addRowFinish", function( event ) {
+     alert(event.type + " 이벤트\r\n" + "\r\n삽입된 행 개수 : " + event.items.length);
+});
+</pre>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">beforeInsertRow</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>그리드에서 편집 가능(editable=true) 인 경우 Insert 또는 Ctrl+Insert 키 입력 시 새 행이 삽입됩니다.</p>
+<p>이 때 새 행의 초기값을 결정 짓도록 삽입 전에 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>columnInfoList : 칼럼의 출력 정보를 갖는 배열 (Array) </li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "beforeInsertRow", function(event) {
+     var newRow = {};
+     var cols = event.columnInfoList;
+     var dataField;
+     for(var i=0,len=cols.length; i&lt;len; i++) {
+         dataField = cols[i]["dataField"];
+         if(dataField == "name") {
+              newRow[dataField] = "< New Task >";
+          } else {
+              newRow[dataField] = "";
+          }
+     }
+     return newRow;
+});
+</pre>
+<p> Retrun : (Object) 새 행 아이템의 초기값을 담는 Object 를 반환하면 적용시킵니다. 만약 반환하지 않으면 빈 행이 출력됩니다.</p>
+<p> 주의 : addRow(), addTreeRow() 로 행을 추가할 때는 발생하지 않습니다. 즉, 사용자의 키보드 인터페이스 (Insert, Ctrl + Insert) 에 의해서만 발생합니다.</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">beforeRemoveRow</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>사용자가 Ctrl + Del 키 또는 removeRow() 또는 removeRow() 또는 removeRowByRowId() 함수를 통해 행을 삭제할 때 삭제 전에 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>softRemoveRowMode : 소프트 제거 모드 사용 여부 즉, 그리드 상에 실제로 삭제될 지 또는 마크 될지 여부</li>
+<li>items : 삭제될 행 아이템들 (Array)</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "beforeRemoveRow", function( event ) {
+     alert(event.type + " 이벤트 :  " + ", 삭제될 행 개수 : " + event.items.length + ", softRemoveRowMode : " + event.softRemoveRowMode);
+     //return false; // 반환을 false 로 처리하면 삭제 실행을 취소함.
+});
+</pre>
+<p>Return : (Boolean) false 를 반환하면 삭제 처리를 하지 않습니다. 따라서 실제 삭제 전 확인 단계를 거칠 수 있습니다.</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">cellClick</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>간트 그리드 단일 셀 클릭 시 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>rowIndex : 행 인덱스</li>
+<li>columnIndex : 칼럼 인덱스</li>
+<li>editable : 해당 셀의 수정 가능 여부</li>
+<li>value : 셀에 출력되고 있는 값(value)</li>
+<li>rowIdValue : rowIdField 로 지정한 키에 대한 값. 즉, 행의 고유값 (rowIdField 설정 선행 필수)</li>
+<li>headerText : 현재 칼럼의 헤더 텍스트</li>
+<li>item : 해당 행에 출력되고 있는 행 아이템 객체 (Object)</li>
+<li>dataField : 행 아이템에서 현재 칼럼이 출력되고 있는 데이터의 KeyField</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "cellClick", function( event ) {
+      alert("rowIndex : " + event.rowIndex + ", "columnIndex : " + event.columnIndex + " clicked");
+});
+</pre>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">cellDoubleClick</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>단일 셀 더블클릭 시 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>rowIndex : 행 인덱스</li>
+<li>columnIndex : 칼럼 인덱스</li>
+<li>editable : 해당 셀의 수정 가능 여부</li>
+<li>value : 셀에 출력되고 있는 값(value)</li>
+<li>rowIdValue : rowIdField 로 지정한 키에 대한 값. 즉, 행의 고유값</li>
+<li>headerText : 현재 칼럼의 헤더 텍스트</li>
+<li>item : 해당 행에 출력되고 있는 행 아이템 객체 (Object)</li>
+<li>dataField : 행 아이템에서 현재 칼럼이 출력되고 있는 데이터의 KeyField</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "cellDoubleClick", function( event ) {
+      alert("rowIndex : " + event.rowIndex + ", "columnIndex : " + event.columnIndex + " dbl clicked");
+});
+</pre>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">contextMenu</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>그리드에서 마우스 오른쪽 버턴 즉, 컨텍스트 메뉴를 활성화 했을 경우 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>target : 헤더(header) 또는 바디(body) 에서 발생했는지를 나타냄</li>
+<li>dataField : 컨텍스트 활성화 된 지점의 칼럼 데이터 필드명 (String) </li>
+<li>headerText : 컨텍스트 활성화 된 지점의 칼럼 헤더 텍스트 (String) </li>
+<li>columnIndex : 컨텍스트 활성화 된 지점의 칼럼 인덱스 (Number) </li>
+<li>rowIndex : 바디 컨텍스트 활성화 된 지점의 행 인덱스 (target 값이 "body" 인 경우에만 유효) (Number) </li>
+<li>depth : 헤더 컨텍스트 활성화 된 지점의 헤더 그룹핑 depth 값(target 값이 "header" 인 경우만 유효) (Number)</li>
+<li>pageX : 컨텍스트 활성화 된 지점의 전역 좌표 X 값 (Number) </li>
+<li>pageY : 컨텍스트 활성화 된 지점의 전역 좌표 Y 값 (Number) </li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "contextMenu", function( event ) {
+     alert(  "이벤트명: " + event.type + ", 컨텍스트 활성화 된 곳 : " + event.target );
+});
+</pre>
+<p>Return : (Boolean) false 를 반환하면 기본 행위인 기본 컨텍스트를 출력시키지 않습니다.</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">editCellCondition</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event &nbsp; <span class="label">Version: </span>3.5<br>
+<p>간트 그리드에서 편집, 수정 모드에서 셀 편집(수정)을 동적으로 결정하는 이벤트입니다.</P>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 그리드의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>index : 작업 번호</li>
+<li>rowIndex : 행 인덱스</li>
+<li>columnIndex : 칼럼 인덱스</li>
+<li>value : 원래 데이터의 해당 셀 값(value)</li>
+<li>headerText : 현재 칼럼의 헤더 텍스트</li>
+<li>item : 해당 행에 출력되고 있는 행 아이템 객체 (Object)</li>
+<li>dataField : 행 아이템에서 현재 칼럼이 출력되고 있는 데이터의 KeyField</li>
+<li>position : 셀의 전역 좌표계(Body 기준) 또는 지역 좌표계(그리드 부모 기준) 위치(x좌표 : event.position.x, y좌표 : event.position.y, x지역좌표 : event.position.localX, y지역좌표 : event.position.localY)</li>
+<li>size : 해당 셀의 가로, 세로 사이즈(width : event.size.width, height : event.size.height) </li>
+<li>isClipboard : 붙여 넣기(Ctrl+V) 로 이벤트가 발생했는지 여부 (Boolean) </li>
+<li>which : 편집 시작을 어떤 방식으로 수행 했는지에 대한 정보(String or Number)</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "editCellCondition", function( event ) {
+      alert("rowIndex : " + event.rowIndex + ", "columnIndex : " + event.columnIndex + " editCellCondition");
+      // return false; // false, true 반환으로 동적으로 수정, 편집 제어
+});
+</pre>
+<p>Return : (Boolean) false 를 반환하면 편집, 수정을 못하도록 막습니다.</p>
+<p>참고 : 해당 이벤트는 수정 가능한 경우, 사용자가 수정하려고 할 때만 발생합니다.</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">editDragCondition</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event &nbsp; <span class="label">Version: </span>3.5<br>
+<p>간트 차트에서 바(bar) 를 드래깅으로 편집(수정)을 동적으로 결정하는 이벤트입니다.</P>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 그리드의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>rowIndex : 행 인덱스</li>
+<li>index : 작업 번호</li>
+<li>item : 해당 행에 출력되고 있는 행 아이템 객체 (Object)</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "editDragCondition", function( event ) {
+      // 자원이 홍길동인 경우  또는 완료된 작업인 경우  드래깅 할 수 없음.
+      if(event.item.resource == "홍길동" || event.item.progress == 100) {
+          return false; // false 반환하면 드래깅 수정 불가임.
+      }
+});
+</pre>
+<p>Return : (Boolean) false 를 반환하면 드래깅으로 수정을 못하도록 막습니다.</p>
+<p>참고 : 해당 이벤트는 수정 가능한 경우, 사용자가 수정하려고 할 때만 발생합니다.</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">filtering</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>사용자가 필터링(Filtering)을 설정하거나 변경, 해제 시 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>filterCache : 현재 필터링 설정된 정보들 (Object)</li>
+</ul>
+<p>만약 필터링이 name 필드 "Anna", "Lawrence" 만 출력하게 설정되었다면 다음과 같은 filterCache 정보를 담고 있습니다.</p>
+<p>{ "name" : [ "Anna", "Lawrence" ] }</p>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "filtering", function( event ) {
+     for(var n in event.filterCache) {
+           console.log( event.filterCache[n] );
+     }
+});
+</pre>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">headerClick</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>그리드 헤더 클릭 시 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>columnIndex : 헤더 칼럼 인덱스</li>
+<li>headerText : 헤더 텍스트</li>
+<li>depth : 헤더의 depth 즉, 헤더를 그룹핑으로 정의한 경우 최상위가 1depth (단일 계층인 경우 depth 는 1)</li>
+<li>item : 칼럼 레이아웃에서 정의한 자신 칼럼 아이템 객체 (Object)</li>
+<li>dataField : 현재 칼럼이 출력되고 있는 데이터의 KeyField</li>
+<li>pageX : 클릭이 발생한 지점의 전역 X 좌표 값</li>
+<li>pageY : 클릭이 발생한 지점의 전역 Y 좌표 값</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "headerClick", function( event ) {
+     alert(event.type + " : " + event.headerText + ", dataField : " + event.dataField + ", index : " + event.columnIndex + ", depth : " + event.item.depth);
+     // 이벤트 핸들링 함수에서 false 를 반환하면 기본 행위를 하지 않음.
+     // headerClick 의 기본 행위는 정렬임.
+     // return false; // 정렬 실행 안함. 
+});
+</pre>
+<p>Return : (Boolean) false 를 반환하면 기본 행위인 정렬을 실행하지 않습니다.</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">hScrollChange</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>그리드의 수평 스크롤(X 스크롤)이 있는 경우, 수평 스크롤의 값이 변경되었을 때 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>position : 현재 스크롤의 위치 (Number)</li>
+<li>oldPosition : 변경 전 스크롤의 위치 (Number)</li>
+<li>minPosition : 수직 스크롤의 최대 위치 (Number)</li>
+<li>maxPosition : 수직 스크롤의 최소 위치 (Number)</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "hScrollChange", function( event ) {
+     console.log( event.type + ", position : " + event.position + ", (min : " + event.minPosition + ", max : " + event.maxPosition + ")" );
+});
+</pre>
+<p>주의 : 이 이벤트 핸들러에서 무리한 작업을 하면 그리드 스크롤링 시 성능이 저하됩니다.</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">keyDown</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>그리드에서 키보드를 누른 경우 발생하는 키다운(keyDown) 이벤트입니다.</p>
+<p>그리드에서 특정 키는 미리 지정된 행위를 합니다.(예: 화살표 키-선택 이동, Insert 키-행 삽입 등)</p>
+<p>이런 약속된 행위를 막고 사용자가 원하는 코드를 실행시킬 수 있습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>keyCode : 키보드 누른 경우 해당 키코드 번호 (Number) </li>
+<li>ctrlKey : Ctrl 키 같이 눌렀는지 여부 (Boolean)</li>
+<li>shiftKey : Shift 키 같이 눌렀는지 여부 (Boolean)</li>
+<li>orgEvent : 자바스크립트의 오리지널 키보드 이벤트 객체 (Object) </li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "keyDown", function(event) {
+     if(event.keyCode == 13) { // 엔터 키
+           alert("엔터 키 누름");
+           return false; // 선택 아래로 내리지 않음(즉, 기본행위 안함)
+     }
+     return true;
+});
+</pre>
+<p> Retrun : (Boolean) 만약 false 를 반환하면 그리드에 미리 지정된 행위를 하지 않습니다.</p>
+<p> 참고 : 그리드에 기본 단축키를 변경하거나 새로운 단축키를 추가할 수 있는 이벤트입니다.</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">notFound</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>사용자가 그리드의 특정 문자열을 검색(search) 하였을 때 문자열을 찾지 못할 경우 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>term : 사용자가 찾고자 했던 문자열(String)</li>
+<li>wrapFound : wrapSearch 를 한 경우 한 바퀴 돌아 같은 행을 찾은 경우. 즉, 문자열에 해당되는 행이 단 1개 인 경우 true임</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "notFound", function( event ) {
+     alert('다음 문자열을 찾을 수 없습니다 - "' + event.term + '"');
+});
+</pre>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">pasteBegin</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>편집 가능 그리드에서 붙여넣기(Ctrl + V) 를 할 때 붙여넣기가 시작되는 경우 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+ <li>type : 이벤트 유형</li>
+ <li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>clipboardData : 그리드에 붙여 넣기 될 데이터 (Array) </li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "pasteBegin", function(event) {
+     console.log("붙여 넣기 시작!!");
+     console.log(JSON.stringify(event.clipboardData);
+     // return false; // 붙여 넣기 안함(취소 시킴)
+     
+});
+</pre>
+<p> Retrun : (Boolean) 만약 false 를 반환하면 기본 행위인 붙여 넣기를 하지 않습니다.</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">pasteEnd</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>편집 가능 그리드에서 붙여넣기(Ctrl + V) 를 할 때 붙여넣기가 완료된 경우 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+ <li>type : 이벤트 유형</li>
+ <li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>clipboardData : 그리드에 붙여 넣기 된 데이터 (Array) </li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "pasteEnd", function(event) {
+     AUIGantt.setSelectionByIndex(0, 0); // 0, 0 으로 선택자 이동시킴.
+     console.log("붙여 넣기 완료!!");
+});
+</pre>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">ready</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>간트차트 렌더링이 완료되고 사용자에 의해 접근 가능해진 경우 발생하는 이벤트입니다.</p>
+<p>이 이벤트는 간트 차트 데이터가 변경되었을 때 다시 발생됩니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>startDate : 프로젝트 시작 날짜</li>
+<li>endDate : 프로젝트 종료 날짜</li>
+<li>workingDayCount : 작업 일(days) 개수</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "ready", function(event) {
+    alert(event.type);
+});</pre>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">removeRow</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>사용자가 Ctrl + Del 키 또는 removeRow() 또는 removeRowByRowId() 함수를 통해 행을 삭제한 경우 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>softRemoveRowMode : 소프트 제거 모드 사용 여부 즉, 그리드 상에 실제로 삭제가 됐는지 또는 마크 됐지는 여부</li>
+<li>items : 삭제된 행 아이템들 (Array)</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "removeRow", function( event ) {
+     alert(event.type + " 이벤트 :  " + ", 삭제된 행 개수 : " + event.items.length + ", softRemoveRowMode : " + event.softRemoveRowMode);
+});
+</pre>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">rowNumCellClick</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>엑스트라 행 번호 칼럼을 클릭 했을 때 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>rowNum : 행 번호 텍스트 값 </li>
+<li>rowIndex : 행 인덱스 </li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+ AUIGantt.bind(myGanttID, "rowNumCellClick", function(event) {
+    alert("eventType : " + event.type + "\r\nrowNum : " + event.rowNum + ", rowIndex : " + event.rowIndex);
+    // false 반환하면 기본 행위 안함
+    return false;
+ });
+</pre>
+<p> Retrun : (Boolean) 만약 false 를 반환하면 기본 행위인 행(또는 셀) 선택을 하지 않습니다.</p>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">selectionChange</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>셀 또는 행 선택이 변경되었을 때 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>selectedItems : 선택된 아이템들을 요소로 갖는 배열(Array-Object) </li>
+</ul>
+<p>selectedItems 는 배열이며, 배열의 개별 아이템에 대한 객체는 다음 요소를 갖습니다.</p>
+<ul>
+<li>rowIndex : 행의 인덱스</li>
+<li>columnIndex : 칼럼의 인덱스</li>
+<li>dataField : 선택 칼럼이 출력하고 있는 그리드 데이터의 필드명</li>
+<li>headerText : 선택 칼럼의 헤더 텍스트</li>
+<li>editable : 선택 칼럼의 수정 가능 여부</li>
+<li>value : 선택 셀의 현재 그리드 값</li>
+<li>rowIdValue : rowIdField 로 지정한 키에 대한 값. 즉, 행의 고유값 (rowIdField 설정 선행 필수)</li>
+<li>item : 선택 행 아이템들을 갖는 Object</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "selectionChange", function( event ) {
+      var selectedItems = event.selectedItems;
+      if(selectedItems.length <= 0) return;
+      // singleRow, singleCell 이 아닌 multiple 인 경우 선택된 개수 만큼 배열의 요소가 있음
+      var first = selectedItems[0];
+      // first 의 값을 보고자 한다면? first.value
+      // first 의 행, 칼럼 인덱스를 보고자 한다면? first.rowIndex, first.columnIndex
+      // first 의 행 아이템 전체를 보고자 한다면? first.item
+      alert(first);
+});
+</pre>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">sorting</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>사용자가 정렬(Sorting)을 설정하거나 변경, 해제 시 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>sortingFields : 현재 정렬된 필드 및 정렬 방법들 (Array)</li>
+</ul>
+<p>만약 정렬을 "Name 오름차순, County 내림차순" 설정한 경우 다음과 같은 sortingFields 정보를 담고 있습니다.</p>
+<p>[ {dataField : "name", sortType : 1}, {dataField : "country", sortType : -1}]</p>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "sorting", function( event ) {
+     console.log(  "이벤트명: " + event.type + ", 현재 소팅 필드 개수 : " + event.sortingFields.length );
+});
+</pre>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">treeOpenChange</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>트리 그리드 일 때 브랜치(branch) 아이템의 열기/닫기 상태 변경 시 발생하는 이벤트입니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>isOpen : 현재 열린 상태인지 닫힌 상태인지 여부</li>
+<li>rowIndex : 해당 아이템의 rowIndex</li>
+<li>depth : 트리 아이템의 depth 즉, 최상위 브랜치 아이템이 1 depth 이며 아래로 내려갈 수록 depth 1씩 증가함</li>
+<li>item : 열기/닫기의 대상이 된 브랜치(branch) 행 아이템 객체 (Object)</li>
+</ul>
+<p>참고 : 전체 열기/닫기 (expandAll, collapseAll) 인 경우 event.item 은 null 입니다.</p> 
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "treeOpenChange", function( event ) {
+     alert(event.type + " : " + event.isOpen + ", rowIndex : " + event.rowIndex);
+});
+</pre>
+</td>
+</tr>
+<tr class="">
+<td class="summaryTableSignatureCol">
+<div class="summarySignature">
+<span class="signatureLink">vScrollChange</span>
+</div>
+</td><td class="summaryTableDescription"><span class="label">Type : </span>Event<br>
+<p>그리드의 수직 스크롤(Y 스크롤)이 있는 경우, 수직 스크롤의 값이 변경되었을 때 발생하는 이벤트입니다.</p>
+<p>사용자가 마우스 휠이나 다른 특정 행위로 수직 스크롤이 변경되면 발생합니다.</p>
+<p>이벤트 핸들러로 전달되는 파라메터의 event 객체 요소는 다음과 같습니다.</p>
+<ul>
+<li>type : 이벤트 유형</li>
+<li>pid : 사용자에 의해 작성된 간트차트의 부모 DIV ID (샘플 상의 myGanttID 와 일치함)</li>
+<li>position : 현재 스크롤의 위치 (Number)</li>
+<li>oldPosition : 변경 전 스크롤의 위치 (Number)</li>
+<li>minPosition : 수직 스크롤의 최대 위치 (Number)</li>
+<li>maxPosition : 수직 스크롤의 최소 위치 (Number)</li>
+</ul>
+<p>이 이벤트를 핸들링하는 방법은 다음과 같습니다.</p>
+<pre>
+AUIGantt.bind(myGanttID, "vScrollChange", function( event ) {
+     console.log( event.type + ", position : " + event.position + ", (min : " + event.minPosition + ", max : " + event.maxPosition + ")" );
+});
+</pre>
+<p>주의 : 이 이벤트 핸들러에서 무리한 작업을 하면 그리드 스크롤링 시 성능이 저하됩니다.</p>
+</td>
+</tr>
+</table>
+</div>
+<div class="MainContent">
+<p></p>
+<center class="copyright">Copyright(c) 2014-2018 AUISoft Co. Ltd. All Right Reserved</center>
+</div>
+</body>
+</html>
+<!--Copyright(c) 2014-2018 AUISoft Co. Ltd. All Right Reserved-->

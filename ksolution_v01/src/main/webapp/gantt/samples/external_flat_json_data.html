@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"/>
+<meta http-equiv="Content-Script-Type" content="text/javascript"/>
+<meta http-equiv="Content-Style-Type" content="text/css"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=1024"/>
+
+<meta property="og:title" content="HTML5 자바스크립트 간트차트 AUIGantt"/>
+<meta property="og:url"  content="http://www.auisoft.net/demo/auigantt/index.html">
+<meta property="og:image" content="http://www.auisoft.net/images/logo3d.png">
+<meta property="og:description"  content="HTML5 자바스크립트 간트차트(javascript ganttchart - AUIGantt"/>
+<meta name="Keywords" content="webGantt, web Gantt, dataGantt, javascript Gantt, html5 Gantt, Gantt component, javascript Gantt component, 웹 간트차트, 데이타 간트차트, 데이터간트차트, 자바스크립트 간트차트, HTML5 간트차트"/>
+ 
+<title>HTML5 자바스크립트 간트차트(JavaScript Gantt Chart) - AUIGantt</title>
+<link href="http://www.auisoft.net/aui.ico" rel="shortcut icon" />
+
+
+<!-- 간트 차트 CSS 스타일  -->
+<link href="../AUIGantt/AUIGantt_style.css" rel="stylesheet">
+
+<!-- 샘플 데모용 CSS. 실제 프로젝트에서 사용할 필요 없음. -->
+<link href="./demo.css" rel="stylesheet">
+
+<!-- AUIGantt 라이센스. -->
+<script type="text/javascript" src="../AUIGantt/AUIGanttLicense.js"></script>
+
+<!-- AUIGantt 라이브러리 -->
+<script type="text/javascript" src="../AUIGantt/AUIGantt.js"></script>
+
+<!-- AUIGantt 리소스 파일 -->
+<script type="text/javascript" src="../AUIGantt/resources/AUIGantt.resources.kr.js"></script>
+
+
+
+<!-- jQuery -->
+<script type="text/javascript"	src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+<script type="text/javascript">
+
+// AUIGantt 생성 후 반환 ID
+var myGanttID;
+
+// 윈도우 onload
+// DOM 완료 후 간트 차트 생성함.
+$(document).ready(function(){  
+	
+	// 간트차트를 생성합니다.
+	createAUIGanttChart();
+	
+	// 데이터 요청
+	requestMyData();
+});
+
+// AUIGantt 를 생성합니다.
+function createAUIGanttChart() {
+	
+	// 간트 그리드(시트) 에 출력할 칼럼 필드 들 작성함.
+	// 아래는 기본값으로 위치 또는 임의 작성으로 개발자는 작성 가능합니다.
+	
+	// 기본 필드 중 기간, 선행, 자원, 진행률 필드는 제거함.
+	var myColumnLayout = [
+         AUIGantt.defaultColumnInfo.index, // 기본 정보 필드
+         AUIGantt.defaultColumnInfo.name, // 작업 이름 필드
+         AUIGantt.defaultColumnInfo.period, // 기간 필드
+         AUIGantt.defaultColumnInfo.start, // 작업 시작 날짜 필드
+         AUIGantt.defaultColumnInfo.end, // 작업 종료 날짜 필드
+         AUIGantt.defaultColumnInfo.predecessor, // 선행 관계 필드
+         AUIGantt.defaultColumnInfo.resource, // 자원 필드
+         AUIGantt.defaultColumnInfo.progress // 진행률 필드
+	];
+	
+	// 간트차트 속성 설정
+	var ganttProps = {
+			
+			// 편집 가능 여부
+			editable : true, 
+			
+			// 그리드(시트) 넓이
+			gridWidth : "40%",
+			
+			// 인덱스 1에 트리 칼럼을 만듬. 즉, 설정한 columnLayout 기준임.
+			treeColumnIndex: 1, 
+			
+			// 간트 그리드(시트) 레이아웃 (필수 정의해야 함)
+			columnLayout : myColumnLayout
+	};
+
+	// 실제로 #gantt_wrap 에 간트차트 생성
+	myGanttID = AUIGantt.create("#gantt_wrap", ganttProps);
+	
+	// ready 이벤트 바인딩
+	AUIGantt.bind(myGanttID, "ready", function(event) {
+		// 처음에 rowIndex 0, columnIndex 1 에 엑셀처럼 선택자 만들기.
+		AUIGantt.setSelectionByIndex(myGanttID, 0, 1);
+	});
+	
+	// 헤더 메뉴 아이콘 클릭 이벤트 바인딩
+	AUIGantt.bind(myGanttID, "headerIconClick", function(event) {
+		alert(event.headerText + " 헤더 메뉴 아이콘 클릭!!");
+	});
+};
+
+
+//데이터 요청 Ajax
+function requestMyData() {
+	
+	// 데이터 요청
+	// jQuery ajax 사용
+	$.ajax({
+		url : "./data/external_flat_data.json",
+		type : "GET",
+		dataType : "json",
+		success : function(data) {
+			setData2Gantt(data);
+		},
+		fail : function(e) {
+			alert("데이터 요청에 실패하였습니다.");
+		},
+		error : function(e) {
+			alert("데이터 요청  중 에러 발생!!");
+		}
+	});
+};
+
+// 여기서 DB에서 가져온 JSON 데이터를 AUIGantt 차트 데이터로 변경시켜 삽입함
+function setData2Gantt(orgData) {
+	
+	// 기본 필드에 해당되는 필드 매핑 처리
+	var fieldMap = {
+			name : "task_name", // 작업 이름 필드
+	        start : "estimate_start", // 작업 시작 날짜 필드
+	        end : "estimate_end", // 작업 종료 날짜 필드
+	        resource : "charge", // 자원
+	        progress : "complete" // 완료율
+	};
+	
+	// 사용자가 작성한 JSON 데이터를 AUIGantt 데이터로 변환
+	var gData = AUIGantt.utils.converter(orgData, fieldMap, "id", "parent");
+	
+	// 변환된 데이터 삽입
+	AUIGantt.setGanttData(myGanttID, gData);
+};
+
+</script>
+
+</head>
+<body>
+	<div id="main">
+	
+		<div id="desc_top">
+			<p>서버 사이드에서 작성한 일반 JSON 데이터는 단순한 리스트로 출력됩니다. 즉, 계층관계 없이 작성된 JSON은 그대로 출력됩니다.</p>
+			<p>그러나 일반 JSON 데이터에서 부모(parent) 를 지시하는 필드가 존재하면 AUIGantt 에서 계층형 트리로 표현할 수 있습니다.</p>
+			<p>예를 들어 서버 사이드에서 작성한 JSON의 데이터가 다음과 같습니다. <span class="btn_demo" onclick="javascript:window.open('./data/external_flat_json_data.txt', '_blank', 'width=1024 height=768 scrollbars=yes')">
+		전체 JSON 데이터 구조 보기</span></p>
+<pre>
+[{
+   <strong>"id": "T0",</strong>
+   "task_name": "Proposal of Project",
+        ......
+}, {
+   <strong>"id": "T1",</strong>
+   <strong>"parent": "T0", // 부모 ID</strong>
+   "task_name": "Gathering of idea",
+       ......
+}, {
+   <strong>"id": "T2",</strong>
+   <strong>"parent": "T1", // 부모 ID</strong>
+   "task_name": "Define project objective",
+       ......
+</pre>
+		<p>이 JSON 데이터를 토대로 AUIGantt 에 계층형으로 출력한 모습입니다.</p>
+		<p>결과적으로 사용자가 서버 사이드에서 작성한 JSON 데이터는 AUIGantt 문서 데이터로 변환하여 삽입합니다.</p>				
+		</div>
+		
+		<!-- 에이유아이간트가 이곳에 생성됩니다. -->
+		<div id="gantt_wrap" style="width:100%; height:380px;"></div>
+	</div>
+	
+	<div id="footer">
+	     <div class="copyright">
+	        <p>Copyright © 2018 AUISoft Co., Ltd. <a href="http://www.auisoft.net" target="_blank" class="link" style="color:#B2CCFF;">http://www.auisoft.net</a> </p>
+	    </div>
+	</div>
+</body>
+</html>
