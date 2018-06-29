@@ -58,6 +58,14 @@
 			<type>jar</type>
 			<scope>compile</scope>
 		</dependency>
+		
+		
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		
         <!--  security -->
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-oxm -->
 		<dependency>
@@ -316,6 +324,13 @@
 		    <artifactId>font-awesome</artifactId>
 		    <version>5.0.6</version>
 		</dependency>
+		
+		
+	 <dependency>
+        <groupId>javax.xml.bind</groupId>
+        <artifactId>jaxb-api</artifactId>
+        <version>2.3.0</version>
+    </dependency>
         
         
 	</dependencies>

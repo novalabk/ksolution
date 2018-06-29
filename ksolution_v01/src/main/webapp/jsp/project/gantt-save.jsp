@@ -106,8 +106,6 @@
  // DOM 완료 후 간트 차트 생성함.
  fnObj.pageStart = function () {
 	
- 	
-	
 	var target = $("#formView01");
 	 
 	handleButtons();

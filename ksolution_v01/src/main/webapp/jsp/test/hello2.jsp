@@ -1,20 +1,35 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="/assets/plugins/jquery/dist/jquery.min.js"></script>
 
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<script>
+const fibonacci = function* (maxStep) {
+	let[prev, curr] = [0, 1];
+	for(let i = 0; i < maxStep; i++){
+		[prev, curr] = [curr, prev + curr];
+		yield curr;
+	}
+};
+
+for(const num of fibonacci(10)){
+	console.log("num2 = " , num);
+}
+
+</script>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Hello Millky</title>
-</head>
-<body>
+<title>Hello Millky3</title>  
+</head> 
+<body> 
 
 <div class="container">
 		<c:out value="<xmp>" escapeXml="true"></c:out>
-		<h2>Hello! ${name}</h2>
+		<h2>Hello! ${name}</h2> 
 		<div>JSP version</div>
 		
-      <div class="page-header">
+      <div class="page-header" id="result">
         <h1>Buttons</h1>
       </div>
       <p>

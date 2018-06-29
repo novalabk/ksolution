@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ax" tagdir="/WEB-INF/tags" %>
+
 <%  boolean initialized = true;//AppContextManager.getBean(DatabaseInitService.class).initialized();
 
     String lastNavigatedPage = null;
@@ -28,7 +29,7 @@
     <jsp:attribute name="css">
         <style>
             .ax-body.login {
-                background: url(${config.background.login}) center center;
+                background: url(${pageContext.request.contextPath}${config.background.login}) center center;
                 background-size: cover;
                 color: #ccc;
             }
@@ -78,7 +79,6 @@
             };
         </script>
     </jsp:attribute>
-
 
     <jsp:body>
 

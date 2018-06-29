@@ -61,7 +61,7 @@ public class KSolutionSecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String USER_VALIDATE = "/jsp/common/userValidate.jsp?errorCode=401";
     public static final String ROLE = "ASP_ACCESS";
     public static final String DuplicationPAGE = "/KLogin/Duplication";
-    
+   
     @Inject
     private KSolutionUserDetailsService userDetailsService;
     

@@ -47,5 +47,6 @@ public class KSolutionConfigFilter implements Filter {
 	public static void main(String args[])throws Exception{
 		System.out.println(IOUtils.toString(new ClassPathResource("ksolution.json").getInputStream(), "UTF-8"));
 		config = JsonUtils.fromJsonToMap(IOUtils.toString(new ClassPathResource("ksolution.json").getInputStream(), "UTF-8"));
+		System.out.println(config.get("background").getClass().getName());
 	}
 }
