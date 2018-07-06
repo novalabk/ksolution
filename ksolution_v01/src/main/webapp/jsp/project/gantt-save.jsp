@@ -879,9 +879,11 @@ function changeProjectStartDate() {
 					<option value="week2"><ax:lang id="ks.Msg.27"/></option><!--주2-->
 					<option value="day"><ax:lang id="ks.Msg.28"/></option><!--일-->
 					<option value="day2"><ax:lang id="ks.Msg.29"/></option><!--일2-->
+					<!--  
 					<option value="6hours"><ax:lang id="ks.Msg.30"/></option><!--6시간-->
 					<option value="hour"><ax:lang id="ks.Msg.31"/></option><!--1시간-->
 					<option value="30minutes"><ax:lang id="ks.Msg.32"/></option><!--30분-->
+					-->
                 </select>
                   
 				<button type="button" class="btn btn-default" onclick="zoomIn();"><ax:lang id="ks.Msg.13"/> <!-- 확대 --></button>

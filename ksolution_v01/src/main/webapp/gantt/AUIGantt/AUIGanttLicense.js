@@ -1,8 +1,7 @@
-/*!
- * AUIGantt 3.5.2 License
- * License Type : Evaluation(Trial) Version
- * Authorized Domain(or IP) : localhost,127.0.0.1,www.novalabk.com
- * Expiration Date : 2018-06-29
- * http://www.auisoft.net
+/**
+ * AUIGantt 3.5 License
+ * License Type : Enterprise Dev License
+ * Host Domain(or IP) : novalabk.com
+ * Expiration Date : 2019/07/06
  */
-var AUIGanttLicense = "eyJjdCI6Inl6Rkk0UTYreDl4YXpEeStqTHJHNWR5cndEWDQ0ODRJK0E2WmJqd2tDVVF4OU41XC95OWZsd0FCVzBRdVdKRGMrWHpXQjRmT3F3M1kzc0FKOHl6K2Y3am5pUTF1T0ExQjNDT1k4R2ZvOVBXWm1ualdaMGRZc085VW5vOHdGRVgzaCIsIml2IjoiZDZhYzUxNGY5NjcwY2Y4NTg2NjVkNDRmZWQxMmM2ZDMiLCJzIjoiOWI2NjIwYzU2MDZkYjZlMiJ9";
+var AUIGanttLicense = "eyJjdCI6IldDdFhTblV0MlFLdVFsWGd1MEkva1JRR3NhRUQ2NVVVWTd0SjF6K1NQSGJTZjRDUTBpRmxCZ3NWTHZDVmpPWXVvN08raHRoOUVtMloremRYVHhRSVpxUi9sMUx0NkdabjlCb0dYcWhINytVL0N1dWluYkw0OUgrRGdLNVlmYXR5NUh6Nm94cm1MbDE5enJYQkVQYW1SQT09IiwiaXYiOiJkODBkZTI2MDIzM2VhZGM1YzkwZWYyZTJhZmI0NGI5MyIsInMiOiJmZjM3ZGQ0YjFhOWQzNjJiIn0=";
