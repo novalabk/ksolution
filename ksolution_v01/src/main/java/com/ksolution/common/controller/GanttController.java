@@ -129,9 +129,9 @@ public class GanttController extends BaseController {
 	
 	@RequestMapping(value = "/get/{oid}", method = RequestMethod.GET, produces = APPLICATION_JSON)
 	public ProjectInfo get(@PathVariable Long oid){
-		System.out.println("id ================ " + oid);
+		//System.out.println("id ================ " + oid);
 		ProjectInfo projectInfo =  projectInfoService.getProjectInfo(oid , true);
-		System.out.println("projectInfo == " + projectInfo);
+		System.out.println("projectInfo == " + projectInfo.getPjtState()); 
 		return projectInfo;
 	}
 	

@@ -63,7 +63,7 @@
                 <div class="ax-split-col ax-frame-user-info">
                   
                     <div class="ax-split-panel">
-                        <a href="<c:url value='/?language=en' />">English</a> / <a href="<c:url value='/?language=ko' />">한국어</a> / <a href="<c:url value='/?language=jp' />">日本語</a>
+                        <a href="<c:url value='/?language=en' />">English</a> / <a href="<c:url value='/?language=ko' />">한국어</a> / <a href="<c:url value='/?language=en' />">日本語</a>
                     </div>
                     <%-- 
                     <div class="panel-split"></div>

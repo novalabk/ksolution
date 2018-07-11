@@ -35,7 +35,6 @@ import org.springframework.stereotype.Component;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-@Component
 @Converter(autoApply = true)
 public class InstantPersistenceConverter implements AttributeConverter<Instant, Timestamp> {
 

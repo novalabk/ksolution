@@ -226,12 +226,21 @@ a.bg-success:focus {
 #exportWindow label { font-weight:normal;}
 #exportWindow p {margin-top:8px;}
 */
-.delete-btn{
+
+.editButton{
 	position: absolute;
 	top: 2px;
 	padding-left:2em;
 	padding-right:2em;
 	right: 0;
+}
+/*
+.delete-btn{
+	position: absolute;
+	top: 2px;
+	padding-left:2em;
+	padding-right:2em;
+	right: 82px;
 }
 
 .save-btn{
@@ -247,7 +256,7 @@ a.bg-success:focus {
 	top: 2px;
 	padding-left:2em;
 	padding-right:2em;
-	right: 60px;
+	right: 126px;
 }
  
 .saveAs-btn {
@@ -255,8 +264,10 @@ a.bg-success:focus {
 	top: 2px;
 	padding-left:2em;
 	padding-right:2em;
-	right: 122px;
+	right: 0px; 
 }
+*/
+
 /*
 .login-btn-tooltip {
 	position: absolute;

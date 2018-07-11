@@ -3,6 +3,8 @@ package com.ksolution.common.domain.gantt;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -12,8 +14,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.boot.ksolution.core.parameter.RequestParams;
+import com.boot.ksolution.core.utils.JsonUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.ksolution.common.domain.BaseService;
+import com.ksolution.common.domain.code.CommonCode;
+import com.ksolution.common.utils.CommonCodeUtils;
 import com.querydsl.jpa.impl.JPAQuery;
 
 @Service
@@ -48,11 +53,11 @@ public class ProjectInfoService extends BaseService<ProjectInfo, Long>{
 		
 		JsonNode tasks = ganttData.get("tasks");
 		
-		if(tasks != null && tasks.size() > 0) {
+		/*if(tasks != null && tasks.size() > 0) {
 			JsonNode taskNode = tasks.get(0);
 
 			long start = taskNode.get("start").asLong();
-			long end = taskNode.get("start").asLong();
+			long end = taskNode.get("end").asLong();
 			
 			Instant startDate = Instant.ofEpochMilli(start);
 			Instant endDate = Instant.ofEpochMilli(end);
@@ -60,6 +65,30 @@ public class ProjectInfoService extends BaseService<ProjectInfo, Long>{
 			projectInfo.setStartDate(startDate);
 			projectInfo.setEndDate(startDate);
 			//taskNode.get("end");
+		}*/
+		if(tasks != null && tasks.size() > 0) {
+			long planStart = Long.MAX_VALUE;
+			long planEnd = Long.MIN_VALUE;
+			for(JsonNode taskNode: tasks) {
+				
+				if(taskNode.get("start") == null) {
+					continue;
+				}
+				
+				
+				long start = taskNode.get("start").asLong();
+				long end = taskNode.get("end").asLong();
+				if(start < planStart) {
+					planStart = start;
+				}
+				if(end > planEnd) {
+					planEnd = end;
+				}	
+			}
+			Instant startDate = Instant.ofEpochMilli(planStart);
+			Instant endDate = Instant.ofEpochMilli(planEnd);
+			projectInfo.setStartDate(startDate);
+			projectInfo.setEndDate(endDate);
 		}
 		
 		super.save(projectInfo);
@@ -95,9 +124,37 @@ public class ProjectInfoService extends BaseService<ProjectInfo, Long>{
 		JPAQuery<ProjectInfo> query = select();
 		query.from(qProjectInfo);
 		
+		if(state != null && state.length() > 0) {
+			query.where(qProjectInfo.pjtState.eq(state));
+		}
+		if(name != null && name.length() > 0) {
+			query.where(qProjectInfo.name.upper().like("%" + name + "%"));
+		}
+		
+		if(code != null && code.length() > 0) {
+			query.where(qProjectInfo.code.upper().like("%" + code + "%"));
+		}
+		
 		Page<ProjectInfo> pList = projectInfoRepository.buildPage(query, query, pageable);
+		Map<String, CommonCode> map = CommonCodeUtils.getMap("PJT_STATE");
+		settingStateDisplay(map, pList.getContent());
 		
 		return pList;
+	}
+	
+	
+	public void settingStateDisplay(Map<String, CommonCode> map, List<ProjectInfo> list) {
+    	list.forEach(m -> settingStateDisplay(map, m));
+    }
+	
+	public void settingStateDisplay(Map<String, CommonCode> map, ProjectInfo info) {
+		String state = info.getPjtState();
+		if(state != null) {
+			CommonCode commonCode = map.get(state);
+			if(commonCode != null) {
+				info.setStateDisplay(commonCode.getName());
+			}
+		}
 	}
 	
 	@Transactional

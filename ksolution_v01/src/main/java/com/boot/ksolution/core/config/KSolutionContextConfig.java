@@ -43,6 +43,9 @@ public class KSolutionContextConfig implements ApplicationContextAware {
 	
 	private static KSolutionContextConfig instance;
 	
+	private String mainPage;
+	
+	private Long mainMenuId;
 	
     private DataSourceConfig dataSource;
 

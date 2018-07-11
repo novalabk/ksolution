@@ -30,6 +30,8 @@
        	 
        	 	var name = target.find('[data-ax-path="' + "name" + '"]').val(initData.prj_name);
        		var desc = target.find('[data-ax-path="' + "desc" + '"]').val(initData.desc);
+       		var pjtState = target.find('[data-ax-path="' + "pjtState" + '"]').val(initData.pjtState);
+       		
         }
         
         function saveGantt(){
@@ -37,12 +39,13 @@
         	 
         	 var name = target.find('[data-ax-path="' + "name" + '"]').val();
         	 var desc = target.find('[data-ax-path="' + "desc" + '"]').val();
-        	 
+        	 var pjtState = target.find('[data-ax-path="' + "pjtState" + '"]').val();
         	 
         	 
         	 data = {
         			 name : name,
-        			 description : desc 
+        			 description : desc,
+        			 pjtState: pjtState
         	        };
         	 parent.axboot.modal.callback(data);
         }
@@ -66,7 +69,12 @@
                                 <input type="text" data-ax-path="name" title="name" class="form-control" data-ax-validate="required"/>
                             </ax:td> 
                         </ax:tr>
-                    
+                        
+                        <ax:tr>
+                        	<ax:td label="ax.admin.use.or.not" width="100%">
+                               <ax:common-code groupCd="PJT_STATE" dataPath="pjtState" clazz="form-control W150"/>
+                         	</ax:td>
+                    	</ax:tr>
                         <%-- <ax:tr>
                             <ax:td label="ax.admin.sample.form.address" width="100%">
                                 <input type="text" data-ax-path="etc1" class="form-control inline-block W100" readonly="readonly"/>

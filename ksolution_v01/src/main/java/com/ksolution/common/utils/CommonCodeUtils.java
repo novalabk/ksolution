@@ -11,6 +11,8 @@ import com.ksolution.common.domain.code.CommonCodeService;
 
 import static java.util.stream.Collectors.groupingBy;
 
+import java.util.HashMap;
+
 public class CommonCodeUtils {
     
     public static List<CommonCode> get(String groupCd) {
@@ -18,6 +20,15 @@ public class CommonCodeUtils {
         requestParams.put("groupCd", groupCd);
         requestParams.put("useYn", KSolutionTypes.Used.YES.getLabel());
         return getService().get(requestParams);
+    }
+    
+    public static Map<String, CommonCode> getMap(String groupCd){
+    	Map<String, CommonCode> map = new HashMap<>();
+    	List<CommonCode> list = get(groupCd);
+    	for(CommonCode commonCode : list) {
+    		map.put(commonCode.getCode(), commonCode);
+    	}
+    	return map;
     }
 
     public static Map<String, List<CommonCode>> getAllByMap() {

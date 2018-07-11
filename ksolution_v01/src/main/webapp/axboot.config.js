@@ -2,7 +2,7 @@
     if (axboot && axboot.def) {
     	
         axboot.def["DEFAULT_TAB_LIST"] = [
-            {menuId: 19, id: 19, progNm:"WEBList", menuNm:"WBSList", progPh: '/jsp/project/wbs-list.jsp', url: CONTEXT_PATH + '/jsp/project/wbs-list.jsp', status: "on", fixed: true}
+            {menuId:19, id: 19, progNm:"WEBList", menuNm:"WBSList", progPh: '/jsp/project/wbs-list.jsp', url: CONTEXT_PATH + '/jsp/project/wbs-list.jsp', status: "on", fixed: true}
         ];
      
         axboot.def["API"] = { 
@@ -76,7 +76,7 @@
             
             "SAVE_GANTT" :{
              	 width: 500,
-                 height: 250, 
+                 height: 310, 
                  iframe: {
                      url: CONTEXT_PATH + "/jsp/project/gantt_save_modal.jsp"  
                  }

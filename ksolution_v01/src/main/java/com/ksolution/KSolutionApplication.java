@@ -42,7 +42,7 @@ public class KSolutionApplication {
 			public void run(String... strings) throws Exception {
 				System.out.println("initBasicCode............");
 				// myService.initBasicCode();*/
-				AppContextManager.getBean(InstantPersistenceConverter.class);
+				//AppContextManager.getBean(InstantPersistenceConverter.class);
 				// myService.createPersons();
 				//logger.error("kkdfjksflsfjslfdjdsdf error");
 			}

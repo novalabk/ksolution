@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -18,6 +19,7 @@ import com.boot.ksolution.core.annotations.ColumnPosition;
 import com.boot.ksolution.core.annotations.Comment;
 import com.boot.ksolution.core.code.KSolutionTypes;
 import com.boot.ksolution.core.code.Types;
+import com.boot.ksolution.core.jpa.InstantPersistenceConverter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -74,11 +76,13 @@ public class User extends BaseJpaModel<String>{
 
     @Column(name = "LAST_LOGIN_DATE")
     @Comment(value = "마지막로그인일시")
+    @Convert(converter = InstantPersistenceConverter.class)
     @ColumnPosition(7)
     private Instant lastLoginDate;
 
     @Column(name = "PASSWORD_UPDATE_DATE")
     @Comment(value = "비밀번호변경일시")
+    @Convert(converter = InstantPersistenceConverter.class)
     @ColumnPosition(8)
     private Instant passwordUpdateDate;
 

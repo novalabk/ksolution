@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.boot.ksolution.core.code.KSolutionTypes;
+import com.boot.ksolution.core.config.KSolutionContextConfig;
 import com.boot.ksolution.core.domain.user.SessionUser;
 import com.boot.ksolution.core.session.JWTSessionHandler;
 import com.boot.ksolution.core.utils.ContextUtil;
@@ -64,7 +65,8 @@ public class KSolutionTokenAuthenticationService {
 	
 	public int tokenExpiry() {
 		if (PhaseUtils.isProduction()) {
-            return 60 * 50;
+            //return 60 * 50;
+			return 60 * 10 * 10 * 10 * 10;
         } else {
             return 60 * 10 * 10 * 10 * 10;
         }
@@ -97,8 +99,10 @@ public class KSolutionTokenAuthenticationService {
 		final String token = CookieUtils.getCookieValue(request, GlobalConstants.ADMIN_AUTH_TOKEN_KEY);
         final String progCd = FilenameUtils.getBaseName(request.getServletPath());
         
-        final Long menuId = requestUtils.getLong("menuId");
+        Long menuId = requestUtils.getLong("menuId");
         final String requestUri = request.getRequestURI();
+        
+       
         
         final String language = requestUtils.getString(GlobalConstants.LANGUAGE_PARAMETER_KEY, "");
         
@@ -122,10 +126,21 @@ public class KSolutionTokenAuthenticationService {
         	throw e;
         }
         
+   
+        String mainPage = KSolutionContextConfig.getInstance().getMainPage();
+        Long mainId = KSolutionContextConfig.getInstance().getMainMenuId();
+        if(requestUri.equals(ContextUtil.getContext() + mainPage)) {
+        	if(menuId < 1) {
+        		menuId = mainId;
+        	}
+        }
+        
         if(!requestUri.startsWith(ContextUtil.getBaseApiPath())) {
         	if (menuId > 0) {
-        		Menu menu = menuService.findOne(menuId);
         		
+        		
+        		Menu menu = menuService.findOne(menuId);
+        		System.out.println("menu = " + menu.getMenuNm()); 
         		if(menu != null) {
         			Program program = menu.getProgram();
         			if(program != null) {

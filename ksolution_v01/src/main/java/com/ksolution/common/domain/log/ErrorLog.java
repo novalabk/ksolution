@@ -4,6 +4,7 @@ import java.time.Clock;
 import java.time.Instant;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import com.boot.ksolution.core.annotations.ColumnPosition;
 import com.boot.ksolution.core.annotations.Comment;
 import com.boot.ksolution.core.domain.log.KSolutionErrorLog;
+import com.boot.ksolution.core.jpa.InstantPersistenceConverter;
 import com.ksolution.common.domain.SimpleJpaModel;
 
 import lombok.EqualsAndHashCode;
@@ -45,9 +47,9 @@ public class ErrorLog extends SimpleJpaModel<Long> implements KSolutionErrorLog{
     @Comment(value = "PHASE")
     private String phase;
 	
-	@Column(name = "SYSTEM", length = 50)
-	@ColumnPosition(3)
-	@Comment(value = "SYSTEM")
+	@Column(name = "SYSTEM_C", length = 50)
+	@ColumnPosition(3) 
+	@Comment(value = "SYSTEM_C")
 	private String system;
 	
 	@Column(name = "LOGGER_NAME", length = 300)
@@ -83,6 +85,7 @@ public class ErrorLog extends SimpleJpaModel<Long> implements KSolutionErrorLog{
     @Column(name = "ERROR_DATETIME")
     @ColumnPosition(10)
     @Comment(value = "에러일시")
+    @Convert(converter = InstantPersistenceConverter.class)
     private Instant errorDatetime = Instant.now(Clock.systemUTC());
    
     @Column(name = "ALERT_YN", length = 1)

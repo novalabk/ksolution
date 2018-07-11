@@ -73,9 +73,7 @@ public class KSolutionLoginFilter extends AbstractAuthenticationProcessingFilter
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
-		System.out.println("call --- LoginFilter");
 		final SessionUser user = new ObjectMapper().readValue(request.getInputStream(), SessionUser.class);
-		System.out.println("user ====== " + user);
 		final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
 		return getAuthenticationManager().authenticate(loginToken);
 		

@@ -313,10 +313,10 @@ fnObj.tabView = axboot.viewExtend({
                 'arrow': '▸'
             },
             items: [
-                {icon: '<i class="cqc-ccw"></i>', label: '현재 탭 새로고침', action: "reload"},
-                {icon: '<i class="cqc-cancel3"></i>', label: '현재탭 닫기', action: "close"},
-                {icon: '<i class="cqc-cancel"></i>', label: '현재탭 제외하고 닫기', action: "closeAnother"},
-                {icon: '<i class="cqc-cancel"></i>', label: '모든탭 닫기', action: "closeAll"}
+                {icon: '<i class="cqc-ccw"></i>', label: LANG("ax.script.ks.06"), action: "reload"}, //현재 탭 새로고침
+                {icon: '<i class="cqc-cancel3"></i>', label: LANG("ax.script.ks.07"), action: "close"}, //현재탭 닫기
+                {icon: '<i class="cqc-cancel"></i>', label: LANG("ax.script.ks.08"), action: "closeAnother"},//현재탭 제외하고 닫기
+                {icon: '<i class="cqc-cancel"></i>', label: LANG("ax.script.ks.09"), action: "closeAll"} //모든탭 닫기
             ]
         });
 
@@ -334,7 +334,7 @@ fnObj.tabView = axboot.viewExtend({
                     fnObj.tabView.list.forEach(function (_item, idx) {
                         if (_item.status == "on") {
                             if (idx == 0) {
-                                alert("홈 탭은 닫을 수 없습니다.");
+                                alert(LANG("ax.script.ks.10")); //홈 탭은 닫을 수 없습니다.
                                 return false;
                             }
                             fnObj.tabView.close(_item.menuId);
@@ -424,7 +424,7 @@ fnObj.tabView = axboot.viewExtend({
                 else removeItem = _item;
             });
             if (newList.length == 0) {
-                alert("마지막 탭을 닫을 수 없습니다");
+                alert(LANG("ax.script.ks.11"));//마지막 탭을 닫을 수 없습니다
                 return false;
             }
             this.list = newList;
@@ -493,6 +493,7 @@ fnObj.tabView = axboot.viewExtend({
 
         var url =  CONTEXT_PATH + item.progPh + "?menuId=" + item.menuId;
         
+         
         if(item.url){
         	url = item.url;
         }
@@ -517,7 +518,7 @@ fnObj.tabView = axboot.viewExtend({
             _item = this.list[findedIndex];
             this.target.find('[data-tab-id="' + _item.menuId + '"]').addClass("on");
             this.frameTarget.find('[data-tab-id="' + _item.menuId + '"]').addClass("on");
-            console.log("item", item);
+            
             //custom
             window["frame-item-" + _item.menuId].location.href = url;//_item.url;
         }
@@ -561,7 +562,7 @@ fnObj.tabView = axboot.viewExtend({
             else removeItem = _item;
         });
         if (newList.length == 0) {
-            alert("마지막 탭을 닫을 수 없습니다");
+            alert(LANG("ax.script.ks.11")); //마지막 탭을 닫을 수 없습니다
             return false;
         }
         this.list = newList;

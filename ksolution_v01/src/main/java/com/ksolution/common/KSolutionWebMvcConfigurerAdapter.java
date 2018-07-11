@@ -132,7 +132,9 @@ public class KSolutionWebMvcConfigurerAdapter extends WebMvcConfigurerAdapter im
         CookieLocaleResolver cookieLocaleResolver = new CookieLocaleResolver();
         cookieLocaleResolver.setCookieName("language");
         cookieLocaleResolver.setCookiePath("/");
+        cookieLocaleResolver.setCookieDomain("novalabk.com");
         cookieLocaleResolver.setDefaultLocale(new Locale("en_EN"));
+        cookieLocaleResolver.setCookieMaxAge(315569260);
         return cookieLocaleResolver;
     }
 	

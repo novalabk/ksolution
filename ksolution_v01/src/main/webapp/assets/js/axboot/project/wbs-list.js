@@ -30,8 +30,9 @@ var fnObj = {};
 			var oid = data.oid;
 			var code = data.code;
 		    var url = CONTEXT_PATH + '/jsp/project/gantt-save.jsp?&oid=' + oid;
-                 
-			item = {
+            
+		    
+			var item = {
 				menuId : code,
 				id : code,
 				progNm : 'GANNTVIEW',
@@ -41,7 +42,8 @@ var fnObj = {};
 				status : "on",
 				fixed : true
 			};
-  
+			
+			
 			parent.fnObj.tabView.open(item);
 	   },
 	   
@@ -121,29 +123,32 @@ var fnObj = {};
 									
 									{
 										key : "code",
-										label : 'CODE',// COL("user.id"),
-										width : 120
+										label : MSG("ks.Msg.34"),//프로젝트 코드
+										width : 140
 									},
 									{
 										key : "name",
-										label : 'Name',// COL("user.name"),
+										label : MSG("ks.Msg.35"),//프로젝트명
 										width : 340
 									},
 
 									{
-										key : "state",
-										label : 'State',// COL("user.name"),
-										width : 140
+										key : "stateDisplay",
+										label : MSG("ks.Msg.36"),//상태
+										width : 140,
+										align: "center"
 									},
 									{
 										key : "startDate",
-										label : '시작일',// COL("user.name"),
-										width : 140
+										label : LANG("ax.script.ks.04"),//시작일
+										width : 140,
+										align: "center"
 									},
 									{
 										key : "endDate",
-										label : "종료일",
-										width : 140
+										label : LANG("ax.script.ks.05"),//종료일
+										width : 140,
+										align: "center"
 									}
 
 							],
@@ -215,8 +220,8 @@ var fnObj = {};
 						var oid = data.oid;
 						var code = data.code;
 					    var url = CONTEXT_PATH + '/jsp/project/gantt-save.jsp?&oid=' + oid;
-			                 
-						item = {
+			                
+						var item = {
 							menuId : code,
 							id : code,
 							progNm : 'GANNTVIEW',
@@ -226,6 +231,8 @@ var fnObj = {};
 							status : "on",
 							fixed : true
 						};
+						
+						
 			  
 						parent.fnObj.tabView.open(item);
 

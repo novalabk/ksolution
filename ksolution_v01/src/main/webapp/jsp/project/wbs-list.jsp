@@ -13,12 +13,13 @@
 <jsp:attribute name="script">
    <ax:script-lang key="ax.script" var="LANG" />
    <ax:script-lang key="ax.admin" var="COL" />
+   <ax:script-lang key="ks.Msg" var="MSG"/>
    <script type="text/javascript" src="<c:url value='/assets/js/axboot/project/wbs-list.js' />"></script>
    
    		
    <script type="text/javascript">
 
-
+ 
 
 	</script>
    
@@ -32,14 +33,14 @@
             <ax:form name="searchView0">
                 <ax:tbl clazz="ax-search-tbl" minWidth="500px">
                     <ax:tr>
-                        <ax:td label='프로젝트 코드' width="300px">
+                        <ax:td label='ks.Msg.34' width="400px"><!-- 프로젝트 코드 -->
                             <input type="text" class="form-control" data-ax-path="code"/>
                         </ax:td>
-                        <ax:td label='프로젝트명' width="300px">
+                        <ax:td label='ks.Msg.35' width="300px"><!-- 프로젝트 명 -->
                             <input type="text" class="form-control" data-ax-path="name"/>
                         </ax:td> 
-                        <ax:td label='상택' width="300px">
-                            <input type="text" class="form-control" data-ax-path="state"/>
+                        <ax:td label='ks.Msg.36' width="200px"><!-- 상태 -->
+                            <ax:common-code groupCd="PJT_STATE" emptyValue="" emptyText="ALL" dataPath="state" clazz="form-control W150"/>
                         </ax:td>
                     </ax:tr>
                     <%-- <ax:tr>

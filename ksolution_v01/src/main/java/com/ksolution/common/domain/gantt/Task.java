@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +16,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.boot.ksolution.core.annotations.ColumnPosition;
 import com.boot.ksolution.core.annotations.Comment;
+import com.boot.ksolution.core.jpa.InstantPersistenceConverter;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.ksolution.common.domain.BaseJpaModel;
 import com.ksolution.common.domain.program.Program;
@@ -61,11 +63,13 @@ public class Task extends BaseJpaModel<Long>{
 	
 	@Column(name = "START_DATE")
 	@Comment(value = "테스크 시작일")
+	@Convert(converter = InstantPersistenceConverter.class)
 	@ColumnPosition(5)
 	private Instant startDate;
 	
 	@Column(name = "END_DATE")
 	@Comment(value = "테스크 종료일")
+	@Convert(converter = InstantPersistenceConverter.class)
 	@ColumnPosition(6)
 	private Instant endDate;
 	

@@ -1,3 +1,4 @@
+<%@page import="com.boot.ksolution.core.utils.SessionUtils"%>
 <%@page import="com.boot.ksolution.core.utils.RequestUtils"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -6,9 +7,12 @@
 <%
 	RequestUtils requestUtils = RequestUtils.of(request);
 	
-	String activeTab = requestUtils.getString("tab", "task");
+	String activeTab = requestUtils.getString("tab", "");
 	
 	requestUtils.setAttribute("activeTab", activeTab);
+	
+	requestUtils.setAttribute("sessionUser", SessionUtils.getCurrentUser());
+	
 %>
 
 <ax:set key="page_auto_height" value="true" />
@@ -68,8 +72,6 @@
 		 var oid = data.oid;
 		 var code = data.code;
 		 var url = CONTEXT_PATH + '/jsp/project/gantt-save.jsp?&oid=' + oid;
-	  	
-		 
  
 		 var item = {
 				menuId : code,
@@ -110,8 +112,21 @@
 	 
 	handleButtons();
  	
-    $("#${activeTab}_tab").addClass("active");
-    $("#${activeTab}_tabpanel").addClass("active");
+	var selectTab = "${activeTab}";
+	
+	var oid = target.find('[data-ax-path="' + "oid" + '"]').val();
+	
+	if(selectTab != '') {
+		
+	}else if(oid != '' && oid.length > 0){
+		selectTab = "view";
+	}else{
+		selectTab = "task";
+	}
+	
+	
+    $("#" + selectTab + "_tab").addClass("active");
+    $("#" + selectTab + "_tabpanel").addClass("active");
     
     target.find('[data-ax5picker="date"]').ax5picker({
         direction: "auto",
@@ -132,9 +147,10 @@
  	
  	
  	 
- 	var oid = target.find('[data-ax-path="' + "oid" + '"]').val();
+ 	
  	
  	if(oid != '' && oid.length > 0){
+ 		
  		ACTIONS.dispatch(ACTIONS.GET_PROJECTINFO, {oid: oid}); 
  	}else{
  		
@@ -156,11 +172,15 @@
           AUIGantt.defaultColumnInfo.period, // 기간 필드
           AUIGantt.defaultColumnInfo.start, // 작업 시작 날짜 필드
           AUIGantt.defaultColumnInfo.end, // 작업 종료 날짜 필드
-          AUIGantt.defaultColumnInfo.predecessor, // 선행 관계 필드
           AUIGantt.defaultColumnInfo.resource, // 자원 필드
-          AUIGantt.defaultColumnInfo.progress // 진행률 필드
+          AUIGantt.defaultColumnInfo.progress, // 진행률 필드
+          AUIGantt.defaultColumnInfo.startActual, // 작업 시작 날짜 필드
+          AUIGantt.defaultColumnInfo.endActual, // 작업 종료 날짜 필드
+          AUIGantt.defaultColumnInfo.predecessor // 선행 관계 필드
  	];
  	
+ 	//console.log("AUIGantt.defaultColumnInfo", AUIGantt.defaultColumnInfo);
+ 	/*
  	myColumnLayout.push({
  	     dataField : "product",
  	     headerText : "Product",
@@ -170,7 +190,7 @@
  	            list : ["IPhone 5S", "Galaxy S5", "IPad Air", "Galaxy Note3", "LG G3", "Nexus 10"],
  	            historyMode : true // 히스토리 모드 사용
  	      }
- 	});
+ 	});*/
  	                      
  	// 간트차트 속성 설정
  	var ganttProps = {
@@ -214,6 +234,15 @@
 				index = i;
 				break;
 			}
+			
+		}
+		
+
+		if(index == -1){
+			// 시간단위거나 분단이면 데이로
+			$('#timeSelect').val("day2").change();
+			//AUIGantt.setTimeScaleUnit(myGanttID, "day");
+			return;
 		}
 		document.getElementById("timeSelect").selectedIndex =  index; 
 	}); 
@@ -303,8 +332,24 @@
             
             
              
-            axToast.push(LANG("ax.script.menu.category.saved"));
-            ACTIONS.dispatch(ACTIONS.REPLACE, res); 
+            //axToast.push(LANG("ax.script.menu.category.saved"));
+            
+          
+   		  axDialog.alert({
+				theme : "primary",
+				msg : LANG("ax.script.onsave")//저장 되었습니다.
+		  });
+   		  
+   		  var re_oid = res.oid;
+ 		  var r_code = res.code;
+ 		
+	   	  if(re_oid != oid || r_code != code){
+	   		 ACTIONS.dispatch(ACTIONS.REPLACE, res); 
+	   	  }else{
+	   		 setInitData(res);
+	   	  }
+            
+           
             //console.log("kk", kk); 
             //alert(res.code);
              
@@ -354,6 +399,7 @@
 	 var decodedData = decodeURIComponent(ganttData);
 	 var jsonData = JSON.parse(decodedData);
 	 var sendData = jsonData.tasks;
+	 
 	 axboot.ajax({
 	        type: "PUT", 
 	        url: ["gantt", "autoCal"], 
@@ -411,8 +457,8 @@ function calculateGanttWrapSizing() {
 	var winWidth = $(this).width();
 	
 
-	if(winWidth > 1820)  
-		winWidth = 1820;
+	//if(winWidth > 1820)  
+	//	winWidth = 1820;
 	if(winWidth < 980)
 		winWidth = 980;
 	if(height < 300) {
@@ -548,20 +594,24 @@ function getInitData(){
 	var oid = target.find('[data-ax-path="' + "oid" + '"]').val();
 	var prj_name = target.find('[data-ax-path="' + "prj_name" + '"]').val();
 	var desc = target.find('[data-ax-path="' + "desc" + '"]').val();
+	var pjtState = target.find('[data-ax-path="' + "pjtState" + '"]').val();
 	
 	return {oid : oid,
 			prj_name : prj_name,
-			desc : desc
+			desc : desc,
+			pjtState: pjtState
 	}
 	
 }
 
 function setInitData(initData){
+
 	var target = $("#formView01");
 	target.find('[data-ax-path="' + "oid" + '"]').val(initData.oid);
 	target.find('[data-ax-path="' + "code" + '"]').val(initData.code);
 	target.find('[data-ax-path="' + "prj_name" + '"]').val(initData.name);
 	target.find('[data-ax-path="' + "desc" + '"]').val(initData.description);
+	target.find('[data-ax-path="' + "pjtState" + '"]').val(initData.pjtState);
 }
 
 //행 추가, 삽입
@@ -612,11 +662,30 @@ function timeSelectChangeHandler() {
 	AUIGantt.setTimeScaleUnit(myGanttID, value);
 };
 
+function today(){
+	   
+    var date = new Date();
+
+    var year  = date.getFullYear();
+    var month = date.getMonth() + 1; // 0부터 시작하므로 1더함 더함
+    var day   = date.getDate();
+
+    if (("" + month).length == 1) { month = "0" + month; }
+    if (("" + day).length   == 1) { day   = "0" + day;   }
+   
+	return "" + year + ". " + month + ". "  +  day;   
+       
+}
+
 
 function saveAsExcel( timeUnit ) {
+	
+	
+	var prjInfo = getInitData();
+	
 	var exportProps = {
-		fileName : "AUIGantt", // 파일 명 지정  
-		sheetName : "일정 관리표", // 엑셀 시트명 지정
+		fileName : prjInfo.prj_name, // 파일 명 지정  
+		sheetName : prjInfo.prj_name, // 엑셀 시트명 지정
 		//fontFamily : "Calibri", // 폰트명 지정
 		timeLabelWidth : 30, // 타임 1유닛의 크기
 		includeGantt : true,  // 간트 차트 엑셀 포함 여부
@@ -624,22 +693,22 @@ function saveAsExcel( timeUnit ) {
 		headers : [ {
 			text : "", height:5, style : { background:"#555555"} // 빈줄 색깔 경계 만듬
 		}, {
-			text : "AUIGantt 차트 엑셀 저장", height:24, style : { fontSize:14, textAlign:"left", fontWeight:"bold", underline:true, background:"#DAD9FF"}
+			text : prjInfo.prj_name, height:24, style : { fontSize:14, textAlign:"left", fontWeight:"bold", underline:true, background:"#DAD9FF"}
 		}, {
-			text : "작성자 : 에이유아이"
+			text : LANG("ax.script.ks.13") + ": ${sessionUser.userNm}"
 		}, {
-			text : "작성일 : 2017. 06. 26."
+			text : LANG("ax.script.ks.14") + ": " + today()
 		}, {
-			text : "추가 정보 : 원하는 문구를 헤더에 넣을 수 있습니다."
+			text : LANG("ax.script.ks.12") +  " : " + prjInfo.desc, height: 30
 		}, {
 			text : "", height:5, style : { background:"#555555"} // 빈줄 색깔 경계 만듬
 		}],
 	footers : [ {
 			text : "", height:5, style : { background:"#555555"} // 빈줄 색깔 경계 만듬
 		}, {
-			text : "원하는 행 만큼", height:24, style : { color: "#0000aa" }
+			text : "", height:24, style : { color: "#0000aa" }
 		}, {
-			text : "푸터에도 뭔가를 넣을 수 있습니다.", height:24, style : { textAlign:"left", fontSize:14, fontWeight:"bold", color:"#ffffff", background:"#222222"}
+			text : "NOVALAB", height:24, style : { textAlign:"left", fontSize:14, fontWeight:"bold", color:"#ffffff", background:"#222222"}
 		}]
 	};
    
@@ -671,7 +740,7 @@ function saveGantt(isSaveAs){
 }	  	
 function deleteProjectInfo(){
 	axDialog.confirm({
-	    msg: LANG("ax.script.form.clearconfirm")
+	    msg: LANG("ax.script.deleteconfirm")
 	}, function () {
 	    if (this.key == "ok") {
 	    	_deleteProjectInfo();
@@ -755,6 +824,7 @@ function changeProjectStartDate() {
 <input type="hidden" name="prj_name" data-ax-path="prj_name"  value="" />
 <input type="hidden" name="desc" data-ax-path="desc"  value="" />
 <input type="hidden" name="code" data-ax-path="code"  value="" />
+<input type="hidden" name="pjtState" data-ax-path="pjtState"  value="" />
 
 <div id="main">
 	
@@ -879,11 +949,12 @@ function changeProjectStartDate() {
 					<option value="week2"><ax:lang id="ks.Msg.27"/></option><!--주2-->
 					<option value="day"><ax:lang id="ks.Msg.28"/></option><!--일-->
 					<option value="day2"><ax:lang id="ks.Msg.29"/></option><!--일2-->
-					<!--  
-					<option value="6hours"><ax:lang id="ks.Msg.30"/></option><!--6시간-->
-					<option value="hour"><ax:lang id="ks.Msg.31"/></option><!--1시간-->
-					<option value="30minutes"><ax:lang id="ks.Msg.32"/></option><!--30분-->
-					-->
+					
+			 
+				 <!--    <option value="6hours"><ax:lang id="ks.Msg.30"/></option><!--6시간-->
+				<!--  	<option value="hour"><ax:lang id="ks.Msg.31"/></option><!--1시간-->
+				<!--  	<option value="30minutes"><ax:lang id="ks.Msg.32"/></option><!--30분--> 
+					
                 </select>
                   
 				<button type="button" class="btn btn-default" onclick="zoomIn();"><ax:lang id="ks.Msg.13"/> <!-- 확대 --></button>
@@ -915,12 +986,16 @@ function changeProjectStartDate() {
 </div>  -->
 <c:choose>
 	<c:when test="${param.oid != '' && param.oid ne null}">
- 		<button type="button" title="Save As" class="btn btn-success saveAs-btn" onclick="saveGantt(true)" >Save As</button>  
- 		<button type="button" title="save" class="btn btn-success modify-btn" onclick="saveGantt()">Modify</button>
- 		<button type="button" title="Save As" class="btn btn-success delete-btn" onclick="deleteProjectInfo()" >Delete</button>  
+	<div class="editButton">
+ 		<button type="button" title="save" class="btn btn-success modify-btn" onclick="saveGantt()"><ax:lang id="ks.Msg.39"/></button>
+ 		<button type="button" title="Delete" class="btn btn-success delete-btn" onclick="deleteProjectInfo()" ><ax:lang id="ks.Msg.38"/></button>  
+ 		<button type="button" title="Save As" class="btn btn-success saveAs-btn" onclick="saveGantt(true)" ><ax:lang id="ks.Msg.37"/></button>  
+ 	</div>
  	</c:when>
  <c:otherwise>
- <button type="button" title="save" class="btn btn-success save-btn" onclick="saveGantt(false)">Save</button>
+ <div class="editButton">
+ <button type="button" title="save" class="btn btn-success save-btn" onclick="saveGantt(false)"><ax:lang id="ks.Msg.39"/></button>
+ </div>
  </c:otherwise>
 </c:choose>			
 </div><!--  <dic id = navTabContent -->
