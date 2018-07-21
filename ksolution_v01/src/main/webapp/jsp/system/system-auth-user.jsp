@@ -13,6 +13,7 @@
         <ax:script-lang key="ax.admin" var="COL" />
         <script type="text/javascript" src="<c:url value='/assets/js/axboot/system/system-auth-user.js' />"></script>
     </jsp:attribute>
+    
     <jsp:body>
 
         <ax:page-buttons></ax:page-buttons>

@@ -1,0 +1,1 @@
+import { pi, square, Person } from './lib';

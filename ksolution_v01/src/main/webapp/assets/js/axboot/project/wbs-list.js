@@ -31,7 +31,6 @@ var fnObj = {};
 			var code = data.code;
 		    var url = CONTEXT_PATH + '/jsp/project/gantt-save.jsp?&oid=' + oid;
             
-		    
 			var item = {
 				menuId : code,
 				id : code,

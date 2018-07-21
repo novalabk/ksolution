@@ -13,6 +13,7 @@
             "manual": "/api/v1/manual",
             "errorLogs": "/api/v1/errorLogs",
             "files": "/api/v1/ax5uploader",
+            "calendar" : "/api/v1/calendar",
             //"files": "/api/v1/files",  
             
             "samples": "/api/v1/samples",
@@ -88,8 +89,16 @@
             	iframe : {
             		url : CONTEXT_PATH + "/jsp/common/version_list_modal.jsp"  
             	}
+            },
+            
+            "SAVE_HOLIDAY" : {
+            	width: 700,
+                height: 380,
+                iframe: {
+                    url: CONTEXT_PATH + "/jsp/calendar/saveHolidayModal.jsp"  
+                }
             }
-        };
+        }; 
     }
 
 

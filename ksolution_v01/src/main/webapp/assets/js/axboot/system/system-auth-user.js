@@ -400,7 +400,7 @@ fnObj.gridView02 = axboot.viewExtend(axboot.gridView, {
         });
     },
     setData: function (_data) {
-        this.target.setData(_data);
+        this.target.setData();
     },
     getData: function (hasYn) {
         hasYn = hasYn || "Y";

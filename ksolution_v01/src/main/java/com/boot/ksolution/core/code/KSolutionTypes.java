@@ -30,6 +30,30 @@ public class KSolutionTypes {
         }
     }
     
+    
+    public enum IsHoliday implements LabelEnum {
+    	YES("Y"), NO("N");
+    	private final String label;
+
+    	IsHoliday(String label){
+    		this.label = label;
+    	}
+
+		@Override
+		public String getLabel() {
+			return label;
+		}
+		
+		public static IsHoliday get(String useYn) {
+			for(IsHoliday isHoliday : values()) {
+				if(isHoliday.getLabel().equals(useYn)) {
+					return isHoliday;
+				}
+			}
+			return null;
+		}
+    }
+    
     public enum Deleted implements LabelEnum {
         YES("Y"), NO("N");
 
