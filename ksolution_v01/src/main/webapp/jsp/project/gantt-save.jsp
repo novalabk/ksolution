@@ -8,9 +8,11 @@
 	RequestUtils requestUtils = RequestUtils.of(request);
 	
 	String activeTab = requestUtils.getString("tab", "");
+	Long menuId = requestUtils.getLong("menuId");
 	
+	
+	requestUtils.setAttribute("menuId", menuId);
 	requestUtils.setAttribute("activeTab", activeTab);
-	
 	requestUtils.setAttribute("sessionUser", SessionUtils.getCurrentUser());
 	
 %>
@@ -48,7 +50,7 @@
 		 var sendData = $.extend({},data);
       	 console.log("sendData ", sendData);
       	 var mappingValue = "get/" + data.oid;
-      	 axboot.ajax({
+      	 axboot.call({
    			type : "GET", 
    			url : [ "gantt", mappingValue],
    			data : sendData,// $.extend({}, 
@@ -65,8 +67,33 @@
    				//ACTIONS.dispatch(ACTIONS.ROLE_GRID_DATA_INIT, {userCd: "",
    				//roleList:[]});
    			}
+   		  }).done(function () {
+   			ACTIONS.dispatch(ACTIONS.GET_HOLIDAYS, data);
    		  });
+   		  
 	 },
+	 GET_HOLIDAYS : function(caller, act, data){
+		 axboot.ajax({
+	            type: "GET",
+	            url: ["event", "holiday"],
+	            data: {projectInfoId : data.oid},
+	            callback: function (res) {
+	            	
+	            			
+	            		
+	            		// 간트의 달력 설정
+	            		AUIGantt.setCalendarProps(myGanttID, {
+	            			"startHour" : 9,
+	            			"endHour" : 18,
+	            			"sunday" : true,
+	            			"saturday" : true,
+	            			"exceptDays" : res
+	            		});
+	            	
+	            }
+		 });
+	 },
+	 
 	 
 	 REPLACE : function(caller, act, data){
 		 var oid = data.oid;
@@ -155,7 +182,7 @@
  	}else{
  		
  		AUIGantt.createNewDocument(myGanttID, 100);
- 	 	
+ 		saveGantt();
  		
  	}
  	 
@@ -614,6 +641,11 @@ function setInitData(initData){
 	target.find('[data-ax-path="' + "pjtState" + '"]').val(initData.pjtState);
 }
 
+
+function close(){
+	parent.fnObj.tabView.close(${menuId}); 
+}
+
 //행 추가, 삽입
 function addRow(position, type) {
 	var item;
@@ -724,13 +756,29 @@ function saveGantt(isSaveAs){
 	axboot.modal.open({
         modalType: "SAVE_GANTT",                                  
         param: param,
-        header:{title:LANG("ax.script.gantt.save.title")},
+        header:{title:LANG("ax.script.gantt.save.title"),
+        	btns: {
+        		close: {
+                    label: '<i class="cqc-circle-with-cross"></i>', onClick: function () {
+                    	var isConfirm = confirm(LANG("ax.script.ks.15"));
+                    	
+		    	    	 if(isConfirm){
+		    	    		parent.fnObj.tabView.close(${menuId});
+		                    window.axModal.close();
+		    	    	 } 
+		    	    	
+                    }
+                }
+            }
+        	
+        
+        },
         sendData: function(){
             return { oid : oid};
         },
         callback: function (data) {
             //console.log("data " , data);
-          
+           
            saveGanttData(data, isSaveAs);
            this.close();
            
@@ -794,6 +842,23 @@ function moveProjectOutput(){
 	location.href = "<c:url value='/jsp/project/project-out.jsp'/>?oid=" + oid;
 }
 
+/*Calendar로 이동*/
+function moveCalendar(){
+	var target = $("#formView01");  
+	var oid = target.find('[data-ax-path="' + "oid" + '"]').val();
+	
+    if(oid != '' && oid.length > 0){
+		location.href = "<c:url value='/jsp/project/project-calendar.jsp'/>?oid=" + oid;
+    } else{
+		alert(MSG('ks.Msg.5'));   //프로젝트 저장후 장 후 이용가능합니다. 
+		$( document.activeElement ).blur();
+		return;
+	}
+    
+
+	//location.href = "<c:url value='/jsp/project/project-calendar.jsp'/>?oid=" + oid;
+}
+
 function changeProjectStartDate() {
 	
 	var target = $("#formView01");
@@ -847,6 +912,10 @@ function changeProjectStartDate() {
 			<li role="presentation" class="text-center tab-menu-btn">
 			<a href="javaScript:moveProjectOutput();"   role="tab" ><ax:lang id="ks.Msg.3"/></a>  <!-- 산출물 -->
 		
+			</li>
+			
+			<li role="presentation" class="text-center tab-menu-btn">
+			<a href="javaScript:moveCalendar();"   role="tab" ><ax:lang id="ks.Msg.44"/></a>  <!-- 휴일관리 -->
 			</li>
   
 			</ul>

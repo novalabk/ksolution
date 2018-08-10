@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import com.boot.ksolution.core.domain.base.KSolutionBaseService;
 import com.boot.ksolution.core.domain.base.KSolutionJPAQueryDSLRepository;
+import com.ksolution.common.domain.calendar.QCalendarEvent;
+import com.ksolution.common.domain.calendar.QCalendarTemplate;
 import com.ksolution.common.domain.code.QCommonCode;
 import com.ksolution.common.domain.file.QCommonFile;
 import com.ksolution.common.domain.file.QCommonFileMaster;
@@ -37,6 +39,9 @@ public class BaseService<T, ID extends Serializable> extends KSolutionBaseServic
     
     protected QCommonFileMaster qCommonFileMaster = QCommonFileMaster.commonFileMaster;
     
+    protected QCalendarTemplate qCalendarTemplate = QCalendarTemplate.calendarTemplate;
+    
+    protected QCalendarEvent qCalendarEvent = QCalendarEvent.calendarEvent;
     
 	protected KSolutionJPAQueryDSLRepository<T, ID> repository;
 	

@@ -104,6 +104,10 @@
 			<li role="presentation" class="active text-center tab-menu-btn"> 
 			<a href="<c:url value='/jsp/project/project-out.jsp'/>?oid=${oid}" role="tab" ><ax:lang id="ks.Msg.3"/></a><!-- 산출물 -->
 			</li>
+			
+			<li role="presentation" class="text-center tab-menu-btn"> 
+			<a href="<c:url value='/jsp/project/project-calendar.jsp'/>?oid=${oid}" role="tab" ><ax:lang id="ks.Msg.44"/></a><!-- 휴일관리 -->
+			</li>
 			</ul> 	
      </ul>
      <div class="H5"></div>

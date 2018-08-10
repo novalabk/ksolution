@@ -3,6 +3,7 @@ package com.ksolution.common.domain.gantt;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,6 +18,9 @@ import com.boot.ksolution.core.parameter.RequestParams;
 import com.boot.ksolution.core.utils.JsonUtils;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.ksolution.common.domain.BaseService;
+import com.ksolution.common.domain.calendar.CalendarEvent;
+import com.ksolution.common.domain.calendar.CalendarEventService;
+import com.ksolution.common.domain.calendar.CalendarTemplateService;
 import com.ksolution.common.domain.code.CommonCode;
 import com.ksolution.common.utils.CommonCodeUtils;
 import com.querydsl.jpa.impl.JPAQuery;
@@ -28,6 +32,9 @@ public class ProjectInfoService extends BaseService<ProjectInfo, Long>{
 	
 	@Inject
 	private GanttJsonDataService ganttDataService;
+	
+	@Inject
+	private CalendarEventService calEventService;
 	
 	@Inject
 	public ProjectInfoService(ProjectInfoRepository projectInfoRepository) {
@@ -53,29 +60,16 @@ public class ProjectInfoService extends BaseService<ProjectInfo, Long>{
 		
 		JsonNode tasks = ganttData.get("tasks");
 		
-		/*if(tasks != null && tasks.size() > 0) {
-			JsonNode taskNode = tasks.get(0);
-
-			long start = taskNode.get("start").asLong();
-			long end = taskNode.get("end").asLong();
-			
-			Instant startDate = Instant.ofEpochMilli(start);
-			Instant endDate = Instant.ofEpochMilli(end);
-			
-			projectInfo.setStartDate(startDate);
-			projectInfo.setEndDate(startDate);
-			//taskNode.get("end");
-		}*/
+		
 		if(tasks != null && tasks.size() > 0) {
 			long planStart = Long.MAX_VALUE;
 			long planEnd = Long.MIN_VALUE;
+			boolean isEmpty = true;
 			for(JsonNode taskNode: tasks) {
-				
 				if(taskNode.get("start") == null) {
 					continue;
 				}
-				
-				
+				isEmpty = false;
 				long start = taskNode.get("start").asLong();
 				long end = taskNode.get("end").asLong();
 				if(start < planStart) {
@@ -85,13 +79,15 @@ public class ProjectInfoService extends BaseService<ProjectInfo, Long>{
 					planEnd = end;
 				}	
 			}
-			Instant startDate = Instant.ofEpochMilli(planStart);
-			Instant endDate = Instant.ofEpochMilli(planEnd);
-			projectInfo.setStartDate(startDate);
-			projectInfo.setEndDate(endDate);
+			if(!isEmpty) {
+				Instant startDate = Instant.ofEpochMilli(planStart);
+				Instant endDate = Instant.ofEpochMilli(planEnd);
+				projectInfo.setStartDate(startDate);
+				projectInfo.setEndDate(endDate);
+			}
 		}
 		
-		super.save(projectInfo);
+		projectInfo = super.save(projectInfo);
 		GanttJsonData ganttJsonData = null; 
 		if(isNew) {
 			ganttJsonData = new GanttJsonData();
@@ -103,8 +99,45 @@ public class ProjectInfoService extends BaseService<ProjectInfo, Long>{
 		ganttJsonData.setGanttData(ganttData);
 		ganttJsonData = ganttDataService.save(ganttJsonData);
 		
-		
 		projectInfo.setGanttData(ganttJsonData.getGanttData());
+		
+		/*KHKIM 달력 저장*/
+		
+		RequestParams param = new RequestParams();
+		param.put("projectInfoId", String.valueOf(projectInfo.getOid()));
+		List<CalendarEvent> projectHolidays = calEventService.get(param); 
+		calEventService.delete(projectHolidays);
+		
+		Long calTempId = projectInfo.getCalTempId();
+		
+		//System.out.println("calTempId " + calTempId);
+	    param = new RequestParams();
+		param.put("tempId", String.valueOf(calTempId));
+	
+		List<CalendarEvent> templist = calEventService.get(param); 
+	    
+		Long oid = projectInfo.getOid();
+		
+		
+		List<CalendarEvent> list = new ArrayList<>();
+	    
+	    for(CalendarEvent tempEvent: templist) {
+	    	CalendarEvent calendarEvent = new CalendarEvent();
+            calendarEvent.setTitle(tempEvent.getTitle());
+            calendarEvent.setGCalId(tempEvent.getGCalId());
+           
+            calendarEvent.setStartDate(tempEvent.getStartDate());
+            calendarEvent.setEndDate(tempEvent.getEndDate());
+           
+            calendarEvent.setProjectInfoId(oid);
+           
+            list.add(calendarEvent);
+	    }
+	   
+	    if(list.size() > 0) {
+	    	calEventService.save(list);
+	    }
+	    
 		
 		return projectInfo;
 	}

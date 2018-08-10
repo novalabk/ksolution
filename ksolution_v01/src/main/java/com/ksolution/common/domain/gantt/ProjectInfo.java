@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -23,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.ksolution.common.domain.BaseJpaModel;
+import com.ksolution.common.domain.calendar.CalendarTemplate;
 import com.ksolution.common.domain.program.menu.Menu;
 import com.ksolution.common.utils.CustomDateTimeDeserializer;
 
@@ -84,6 +87,15 @@ public class ProjectInfo extends BaseJpaModel<Long>{
 	@Comment(value = "project State")
 	@ColumnPosition(7)
 	private String pjtState;
+	
+	@Column(name = "tempId", length = 50)
+    @Comment(value = "사용탬플릿 아이디")
+    @ColumnPosition(8)
+    private Long calTempId;
+	
+	/*@ManyToOne
+    @JoinColumn(name = "tempId", referencedColumnName = "oid", insertable = false, updatable = false)
+    private CalendarTemplate template;*/
 	
 	
 	@Transient

@@ -13,7 +13,8 @@
             "manual": "/api/v1/manual",
             "errorLogs": "/api/v1/errorLogs",
             "files": "/api/v1/ax5uploader",
-            "calendar" : "/api/v1/calendar",
+            "event" : "/api/v1/event",
+            "calendarTemp" : "/api/v1/calendarTemp",
             //"files": "/api/v1/files",  
             
             "samples": "/api/v1/samples",
@@ -77,7 +78,7 @@
             
             "SAVE_GANTT" :{
              	 width: 500,
-                 height: 310, 
+                 height: 370, 
                  iframe: {
                      url: CONTEXT_PATH + "/jsp/project/gantt_save_modal.jsp"  
                  }
@@ -97,11 +98,19 @@
                 iframe: {
                     url: CONTEXT_PATH + "/jsp/calendar/saveHolidayModal.jsp"  
                 }
-            }
+            },
+            
+            "SaveCalendarTemplate" : {
+            	width: 700,
+                height: 380,
+                iframe: {
+                    url: CONTEXT_PATH + "/jsp/calendar/saveCalendarTemplate.jsp"  
+                }
+             }
         }; 
     }
 
-
+ 
     var preDefineUrls = {
         "manual_downloadForm": "/api/v1/manual/excel/downloadForm",
         "manual_viewer": "/jsp/system/system-help-manual-view.jsp"

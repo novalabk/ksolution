@@ -17,6 +17,10 @@
     </jsp:attribute>
       
     <jsp:attribute name="script">
+    
+        <ax:script-lang key="ax.script" var="LANG"/>
+        <ax:script-lang key="ks.Msg" var="MSG"/>
+    
         <script type="text/javascript">
         var fnObj = {};
         
@@ -41,17 +45,24 @@
         	 var desc = target.find('[data-ax-path="' + "desc" + '"]').val();
         	 var pjtState = target.find('[data-ax-path="' + "pjtState" + '"]').val();
         	 
+        	 var calTempId = target.find('[data-ax-path="' + "calTempId" + '"]').val();
         	 
         	 data = {
         			 name : name,
         			 description : desc,
-        			 pjtState: pjtState
-        	        };
+        			 pjtState: pjtState,
+        			 calTempId : calTempId
+        	};
         	 parent.axboot.modal.callback(data);
         }
         
         function closeModal(){
-        	parent.axboot.modal.close();
+        	
+        	var isConfirm = confirm(LANG("ax.script.ks.15"));
+        	if(isConfirm){
+        		parent.axboot.modal.close();
+        		parent.close();
+        	}
         }
         
         </script>
@@ -71,10 +82,17 @@
                         </ax:tr>
                         
                         <ax:tr>
-                        	<ax:td label="ax.admin.use.or.not" width="100%">
+                        	<ax:td label="ks.Msg.36" width="100%">
                                <ax:common-code groupCd="PJT_STATE" dataPath="pjtState" clazz="form-control W150"/>
                          	</ax:td>
                     	</ax:tr>
+                    	
+                    	<ax:tr>
+                        	<ax:td label="ax.admin.use.or.not" width="100%">
+                               <ax:calendarTempList  dataPath="calTempId" clazz="form-control W150"/>
+                         	</ax:td>
+                    	</ax:tr>
+                    	
                         <%-- <ax:tr>
                             <ax:td label="ax.admin.sample.form.address" width="100%">
                                 <input type="text" data-ax-path="etc1" class="form-control inline-block W100" readonly="readonly"/>
