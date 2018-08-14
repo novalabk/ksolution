@@ -138,7 +138,6 @@ public class ProjectInfoService extends BaseService<ProjectInfo, Long>{
 	    	calEventService.save(list);
 	    }
 	    
-		
 		return projectInfo;
 	}
 	
@@ -196,6 +195,12 @@ public class ProjectInfoService extends BaseService<ProjectInfo, Long>{
 		if(data != null) {
 			ganttDataService.delete(data);
 		}
+		
+		RequestParams params = new RequestParams<>();
+		params.put("projectInfoId", String.valueOf(id));
+		List<CalendarEvent> clist = calEventService.get(params);
+		calEventService.delete(clist);
+		
 		super.delete(id); 
 	}
 
