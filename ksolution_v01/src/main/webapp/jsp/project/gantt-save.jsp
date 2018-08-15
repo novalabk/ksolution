@@ -58,6 +58,7 @@
    			callback : function(res) {
    				//console.log("res", res);
    				setInitData(res);
+   				//console.log("setInitData", res);
    				//$(this).addClass("class_name");
    				//$(this).removeClass("class_name");
    				AUIGantt.setGanttData(myGanttID, res.ganttData); 
@@ -123,8 +124,6 @@
 	}
  });
  
- 
-
  
  var myGanttID;
 
@@ -639,11 +638,12 @@ function getInitData(){
 	var prj_name = target.find('[data-ax-path="' + "prj_name" + '"]').val();
 	var desc = target.find('[data-ax-path="' + "desc" + '"]').val();
 	var pjtState = target.find('[data-ax-path="' + "pjtState" + '"]').val();
-	
+	var calTempId = target.find('[data-ax-path="' + "calTempId" + '"]').val();
 	return {oid : oid,
 			name : prj_name,
 			description : desc,
-			pjtState: pjtState
+			pjtState: pjtState,
+			calTempId : calTempId
 	}
 	
 }
@@ -656,6 +656,7 @@ function setInitData(initData){
 	target.find('[data-ax-path="' + "prj_name" + '"]').val(initData.name);
 	target.find('[data-ax-path="' + "desc" + '"]').val(initData.description);
 	target.find('[data-ax-path="' + "pjtState" + '"]').val(initData.pjtState);
+	target.find('[data-ax-path="' + "calTempId" + '"]').val(initData.calTempId);
 }
 
 
@@ -942,6 +943,9 @@ function changeProjectStartDate() {
 <input type="hidden" name="desc" data-ax-path="desc"  value="" />
 <input type="hidden" name="code" data-ax-path="code"  value="" />
 <input type="hidden" name="pjtState" data-ax-path="pjtState"  value="" />
+<input type="hidden" name="calTempId" data-ax-path="calTempId"  value="" />
+
+
 
 <div id="main">
 	

@@ -23,7 +23,8 @@
      
     if (key.equals("*")) {
         json = JsonUtils.toJson(properties);
-    } else {
+    }
+    else {
         Map<String, String> filterMap = new HashMap<>();
 
         Enumeration enumeration = properties.keys();

@@ -94,7 +94,7 @@
             
             "SAVE_HOLIDAY" : {
             	width: 700,
-                height: 380,
+                height: 430,
                 iframe: {
                     url: CONTEXT_PATH + "/jsp/calendar/saveHolidayModal.jsp"  
                 }

@@ -28,7 +28,7 @@
         	
         	var initData = parent.getInitData();
         	
-        	console.log("initData", initData);
+        	//console.log("initData", initData);
         	
         	var target = $("#formView01");
        	 
@@ -36,16 +36,37 @@
        		var desc = target.find('[data-ax-path="' + "desc" + '"]').val(initData.description);
        		var pjtState = target.find('[data-ax-path="' + "pjtState" + '"]').val(initData.pjtState);
        		
+  
+       		target.find('[data-ax-path="' + "calTempId" + '"]').val(initData.calTempId);
+       		
+       		
+       		if(initData.oid){
+       			target.find('[data-ax-path="' + "calTempId" + '"]').prop("disabled", true);
+       		}
         }
         
         function saveGantt(){
         	 var target = $("#formView01");
-        	 
+     
         	 var name = target.find('[data-ax-path="' + "name" + '"]').val();
         	 var desc = target.find('[data-ax-path="' + "desc" + '"]').val();
         	 var pjtState = target.find('[data-ax-path="' + "pjtState" + '"]').val();
-        	 
         	 var calTempId = target.find('[data-ax-path="' + "calTempId" + '"]').val();
+        	 
+        	 if(checkSpace(name)){
+        		 alert(LANG("ax.script.ks.17"));
+        		 return;
+        	 }
+        	 
+        	 if(checkSpace(pjtState)){
+        		 alert(LANG("ax.script.ks.18"));
+        		 return;
+        	 }
+        	 
+        	 if(checkSpace(calTempId)){
+        		 alert(LANG("ax.script.ks.19"));
+        		 return;
+        	 }
         	 
         	 data = {
         			 name : name,
@@ -55,6 +76,12 @@
         	};
         	 parent.axboot.modal.callback(data);
         }
+        
+        function checkSpace(str) { 
+        	return (!str || /^\s*$/.test(str));
+        } 
+
+     
         
         function closeModal(){
         	var initData = parent.getInitData();
@@ -94,7 +121,7 @@
                     	</ax:tr>
                     	
                     	<ax:tr>
-                        	<ax:td label="ax.admin.use.or.not" width="100%">
+                        	<ax:td label="ks.Msg.45" width="100%">
                                <ax:calendarTempList  dataPath="calTempId" clazz="form-control W150"/>
                          	</ax:td>
                     	</ax:tr>
