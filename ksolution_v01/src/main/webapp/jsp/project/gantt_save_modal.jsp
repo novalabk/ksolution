@@ -32,8 +32,8 @@
         	
         	var target = $("#formView01");
        	 
-       	 	var name = target.find('[data-ax-path="' + "name" + '"]').val(initData.prj_name);
-       		var desc = target.find('[data-ax-path="' + "desc" + '"]').val(initData.desc);
+       	 	var name = target.find('[data-ax-path="' + "name" + '"]').val(initData.name);
+       		var desc = target.find('[data-ax-path="' + "desc" + '"]').val(initData.description);
        		var pjtState = target.find('[data-ax-path="' + "pjtState" + '"]').val(initData.pjtState);
        		
         }
@@ -57,12 +57,18 @@
         }
         
         function closeModal(){
+        	var initData = parent.getInitData();
         	
-        	var isConfirm = confirm(LANG("ax.script.ks.15"));
-        	if(isConfirm){
-        		parent.axboot.modal.close();
-        		parent.close();
+        	if(initData.oid == null || initData.oid ==''){
+        		var isConfirm = confirm(LANG("ax.script.ks.15"));
+            	if(isConfirm){
+            		
+            		parent.close();
+            	}
         	}
+        	
+        	parent.axboot.modal.close();
+        	
         }
         
         </script>

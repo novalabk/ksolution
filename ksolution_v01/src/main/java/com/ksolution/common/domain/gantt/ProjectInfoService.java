@@ -100,43 +100,55 @@ public class ProjectInfoService extends BaseService<ProjectInfo, Long>{
 		ganttJsonData = ganttDataService.save(ganttJsonData);
 		
 		projectInfo.setGanttData(ganttJsonData.getGanttData());
+		Long calTempId = projectInfo.getCalTempId();
 		
 		/*KHKIM 달력 저장*/
 		
 		RequestParams param = new RequestParams();
 		param.put("projectInfoId", String.valueOf(projectInfo.getOid()));
-		List<CalendarEvent> projectHolidays = calEventService.get(param); 
-		calEventService.delete(projectHolidays);
+		List<CalendarEvent> projectHolidays = calEventService.get(param);
 		
-		Long calTempId = projectInfo.getCalTempId();
-		
-		//System.out.println("calTempId " + calTempId);
-	    param = new RequestParams();
-		param.put("tempId", String.valueOf(calTempId));
-	
-		List<CalendarEvent> templist = calEventService.get(param); 
-	    
-		Long oid = projectInfo.getOid();
+		boolean isCalendar = true;
+		if(calTempId == null || projectHolidays.size() > 0) {
+			isCalendar = false;
+		}
 		
 		
-		List<CalendarEvent> list = new ArrayList<>();
-	    
-	    for(CalendarEvent tempEvent: templist) {
-	    	CalendarEvent calendarEvent = new CalendarEvent();
-            calendarEvent.setTitle(tempEvent.getTitle());
-            calendarEvent.setGCalId(tempEvent.getGCalId());
-           
-            calendarEvent.setStartDate(tempEvent.getStartDate());
-            calendarEvent.setEndDate(tempEvent.getEndDate());
-           
-            calendarEvent.setProjectInfoId(oid);
-           
-            list.add(calendarEvent);
-	    }
-	   
-	    if(list.size() > 0) {
-	    	calEventService.save(list);
-	    }
+		if(isCalendar) {
+			calEventService.delete(projectHolidays);
+			
+			//System.out.println("calTempId " + calTempId);
+		    param = new RequestParams();
+		    if(calTempId != null) {
+		    	
+		    	param.put("tempId", String.valueOf(calTempId));
+		    }
+			
+		
+			List<CalendarEvent> templist = calEventService.get(param); 
+		    
+			Long oid = projectInfo.getOid();
+			
+			
+			List<CalendarEvent> list = new ArrayList<>();
+		    
+		    for(CalendarEvent tempEvent: templist) {
+		    	CalendarEvent calendarEvent = new CalendarEvent();
+	            calendarEvent.setTitle(tempEvent.getTitle());
+	            calendarEvent.setGCalId(tempEvent.getGCalId());
+	           
+	            calendarEvent.setStartDate(tempEvent.getStartDate());
+	            calendarEvent.setEndDate(tempEvent.getEndDate());
+	           
+	            calendarEvent.setProjectInfoId(oid);
+	           
+	            list.add(calendarEvent);
+		    }
+		   
+		    if(list.size() > 0) {
+		    	calEventService.save(list);
+		    }
+		}
 	    
 		return projectInfo;
 	}
