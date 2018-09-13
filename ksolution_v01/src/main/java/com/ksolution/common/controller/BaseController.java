@@ -1,7 +1,5 @@
 package com.ksolution.common.controller;
 
-import static org.hamcrest.CoreMatchers.instanceOf; 
-
 import java.sql.SQLException;
 
 import javax.inject.Inject;
